@@ -32,7 +32,11 @@ public class UserService {
         if(userRepo.existsByUsername(userToCreate.getUsername())){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Username already exists.");
         }
-        var newUser = myUserDetailService.addUser(userToCreate.getUsername(), userToCreate.getEmail(), userToCreate.getPassword(), userToCreate.getRoles());
+        var newUser = myUserDetailService.addUser(
+                userToCreate.getUsername(),
+                userToCreate.getEmail(),
+                userToCreate.getPassword(),
+                userToCreate.getRoles());
         return userRepo.save(newUser);
     }
 }

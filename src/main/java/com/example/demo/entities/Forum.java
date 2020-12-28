@@ -18,7 +18,9 @@ public class Forum {
     private Long forum_id;
     private String name;
 
-
+    public void setId(Long id) {
+        this.forum_id = id;
+    }
 
 
 }

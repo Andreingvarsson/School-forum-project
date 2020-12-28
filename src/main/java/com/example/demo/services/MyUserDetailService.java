@@ -9,6 +9,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.annotation.PostConstruct;
@@ -33,6 +34,8 @@ public class MyUserDetailService implements UserDetailsService {
             addUser("test", "test@test.com", "test", "USER");
         }
     }
+
+
 
     public User addUser(String username, String email, String password, String roles){
         User user = new User(username, email, encoder.encode(password), roles);
