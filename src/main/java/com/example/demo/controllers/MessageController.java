@@ -1,3 +1,4 @@
+/*
 package com.example.demo.controllers;
 
 
@@ -14,7 +15,7 @@ import java.util.List;
 public class MessageController {
 
 
-    /*
+
     @Autowired
     MessageService messageService;
 
@@ -31,9 +32,12 @@ public class MessageController {
         return ResponseEntity.ok(message);
     }
 
-     */
+
 
 
 
 
 }
+
+
+ */

@@ -11,7 +11,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping()
+@RequestMapping("/api/v1/forums")
 public class ForumController {
 
     @Autowired
@@ -19,8 +19,9 @@ public class ForumController {
 
 
     @GetMapping
-   public ResponseEntity<List<Forum>> findAllForums(String name){
-
+   public ResponseEntity<List<Forum>> getAllForums(){
+        var forums = forumService.findAllForums();
+        return ResponseEntity.ok(forums);
     }
 
     @GetMapping("/{id}")

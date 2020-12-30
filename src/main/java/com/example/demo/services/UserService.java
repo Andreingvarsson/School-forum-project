@@ -1,3 +1,4 @@
+/*
 package com.example.demo.services;
 
 import com.example.demo.dtos.UserDto;
@@ -17,7 +18,7 @@ public class UserService {
     UserRepo userRepo;
 
     @Autowired
-    MyUserDetailService myUserDetailService;
+    MyUserDetailsService myUserDetailService;
 
     public User getCurrentUser(){
         String username = myUserDetailService.getCurrentUser();
@@ -40,3 +41,5 @@ public class UserService {
         return userRepo.save(newUser);
     }
 }
+
+ */

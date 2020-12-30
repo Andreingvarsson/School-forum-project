@@ -6,3 +6,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ThreadRepo extends JpaRepository<Thread, Long> {
 }
+
+
+

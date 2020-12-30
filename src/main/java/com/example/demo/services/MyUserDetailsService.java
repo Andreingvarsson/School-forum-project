@@ -1,3 +1,4 @@
+/*
 package com.example.demo.services;
 
 import com.example.demo.repositories.UserRepo;
@@ -18,7 +19,7 @@ import java.util.Collection;
 import java.util.stream.Collectors;
 
 @Configuration
-public class MyUserDetailService implements UserDetailsService {
+public class MyUserDetailsService implements UserDetailsService {
 
     private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
@@ -60,3 +61,5 @@ public class MyUserDetailService implements UserDetailsService {
 
     public BCryptPasswordEncoder getEncoder() {return encoder;}
 }
+
+ */

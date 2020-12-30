@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-
+import java.util.List;
 
 @Service
 public class ForumService {
@@ -15,7 +15,8 @@ public class ForumService {
     ForumRepo forumRepo;
 
 
-    public void findAll(String name) {
+    public List<Forum> findAllForums() {
+        return forumRepo.findAll();
     }
 
     public Forum findById(Long id) {
@@ -40,7 +41,4 @@ public class ForumService {
         }
         forumRepo.deleteById(id);
     }
-
-
-
 }
