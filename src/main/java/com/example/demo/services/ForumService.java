@@ -1,3 +1,4 @@
+
 package com.example.demo.services;
 
 import com.example.demo.entities.Forum;
@@ -31,7 +32,7 @@ public class ForumService {
         if(!forumRepo.existsById(id)){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find the forum with that id..");
         }
-        forum.setId(id);
+        forum.setForum_id(id);
         forumRepo.save(forum);
     }
 
@@ -42,3 +43,5 @@ public class ForumService {
         forumRepo.deleteById(id);
     }
 }
+
+

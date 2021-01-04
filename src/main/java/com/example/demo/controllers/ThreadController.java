@@ -1,5 +1,6 @@
 package com.example.demo.controllers;
 
+import com.example.demo.entities.Thread;
 import com.example.demo.services.ThreadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -31,7 +32,7 @@ public class ThreadController {
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Thread> addThread(@RequestBody Thread thread){
         var newThread = threadService.createThread(thread);
-        var uri = URI.create("/api/v1/thread" + newThread.getId());  // getThread_id fungerar ej?!
+        var uri = URI.create("/api/v1/thread" + newThread.getThread_id());  // getThread_id fungerar ej?!
         return ResponseEntity.created(uri).body(newThread);
     }
 
@@ -45,5 +46,7 @@ public class ThreadController {
         threadService.delete(id);
     }
 }
+
+
 
 

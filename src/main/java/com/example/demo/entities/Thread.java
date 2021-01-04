@@ -1,8 +1,10 @@
 package com.example.demo.entities;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.Set;
@@ -28,15 +30,6 @@ public class Thread {
         this.timestamp = new Date().getTime();
     }
 
-    public void setId(Long id){
-         this.thread_id = id;
-    } // fungerar ej?!
-
-    public Long getThread_Id(){
-        return thread_id;
-    }
-
-/*
     @OneToMany
     @JoinColumn(name = "thread_id")
     private Set<Message> messages;
@@ -46,6 +39,5 @@ public class Thread {
     private User threadOwner;
 
 
- */
 
 }
