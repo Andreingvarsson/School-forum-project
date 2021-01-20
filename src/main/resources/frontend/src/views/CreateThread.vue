@@ -42,7 +42,7 @@ class CreateThread extends Vue {
     let id = this.$route.params.id;
 
     let newThread = await fetch(
-      `http://localhost:3000/api/v1/forums/${id}/threads`,
+      `/api/v1/forums/${id}/threads`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
