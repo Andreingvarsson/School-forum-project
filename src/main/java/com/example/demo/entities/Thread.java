@@ -21,13 +21,18 @@ public class Thread {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long thread_id;
     private String title;
-    private Long timestamp; //= new Date().getTime();
+    private String threadMessage;
+    private Long timestamp;
     private Long forum_id;
 
-    public Thread(String title, Long forum_id){
+
+    public Thread(String title, String threadMessage, Long forum_id, User user){
         this.title = title;
+        this.threadMessage = threadMessage;
         this.forum_id = forum_id;
         this.timestamp = new Date().getTime();
+        this.threadOwner = user;
+
     }
 
     @OneToMany

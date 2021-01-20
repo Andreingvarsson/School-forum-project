@@ -17,14 +17,21 @@ public class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long message_id;
-    private long timestamp = new Date().getTime();
+    private long timestamp;
     private String message;
     private Long thread_id;
 
+    public Message(String message, Long thread_id, User user) {
+        this.message = message;
+        this.thread_id = thread_id;
+        this.timestamp = new Date().getTime();
+        this.messageOwner = user;
+    }
 
-   /* @ManyToOne
+    @ManyToOne
     @JoinColumn(name = "user_id")
-    */
+    private User messageOwner;
+
 
 
 

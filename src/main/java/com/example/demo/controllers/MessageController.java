@@ -1,43 +1,61 @@
-/*
 package com.example.demo.controllers;
 
-
+import com.example.demo.dtos.MessageCreateDto;
 import com.example.demo.entities.Message;
 import com.example.demo.services.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/v1/messages")
+@RequestMapping("api/v1")
 public class MessageController {
-
-
 
     @Autowired
     MessageService messageService;
 
 
-    @GetMapping
-    public ResponseEntity<List<Message>> getAllMessages(@RequestParam(required = false) String search){
-        var messages = messageService.getAllMessages(search);
+    @GetMapping("/messages")
+    public ResponseEntity<List<Message>> getAllMessages(){
+        var messages = messageService.findAllMessages();
         return ResponseEntity.ok(messages);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/thread/messages/{id}")
     public ResponseEntity<Message> getMessageById(@PathVariable Long id){
         var message = messageService.getMessageById(id);
         return ResponseEntity.ok(message);
+
     }
 
+    @Secured({"ROLE_USER", "ROLE_ADMIN" })
+    @PostMapping("/threads/{thread_id}/messages")
+    public ResponseEntity<Message> addMessage(@RequestBody MessageCreateDto message, @PathVariable long thread_id){
+        var newMessage = messageService.createMessage(message, thread_id);
+        var uri = URI.create("/api/v1/messages" + newMessage.getMessage_id());
+        return ResponseEntity.created(uri).body(newMessage);
+    }
 
+    @Secured("ROLE_ADMIN")
+    @PutMapping("/threads/{id}/messages")
+    public void updateMessage(@PathVariable Long id, @RequestBody Message message){
+        messageService.update(id, message);
+    }
 
+    @Secured("ROLE_ADMIN")
+    @DeleteMapping("/messages/{id}")
+    public void deleteMessage(@PathVariable Long id){
+        messageService.delete(id);
+    }
 
 
 
 }
 
 
- */
+
+

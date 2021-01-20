@@ -1,4 +1,3 @@
-/*
 package com.example.demo.services;
 
 import com.example.demo.dtos.UserDto;
@@ -40,6 +39,22 @@ public class UserService {
                 userToCreate.getRoles());
         return userRepo.save(newUser);
     }
+
+    public void update(Long id, User user) {
+        if(!userRepo.existsById(id)){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find the user with that id..");
+        }
+        user.setUser_id(id);
+        userRepo.save(user);
+    }
+
+
+    public void delete(Long id) {
+        if(!userRepo.existsById(id)){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find the user with that id..");
+        }
+        userRepo.deleteById(id);
+    }
 }
 
- */
+

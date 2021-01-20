@@ -1,17 +1,20 @@
 package com.example.demo.controllers;
 
+import com.example.demo.dtos.ThreadCreateDto;
 import com.example.demo.entities.Thread;
+import com.example.demo.entities.User;
 import com.example.demo.services.ThreadService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
+
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/v1/threads")
+@RequestMapping("api/v1")
 public class ThreadController {
 
     @Autowired
@@ -23,24 +26,27 @@ public class ThreadController {
         return ResponseEntity.ok(threads);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/threads/{id}")
     public ResponseEntity<Thread> getThreadById(@PathVariable Long id){
         var thread = threadService.findById(id);
         return ResponseEntity.ok(thread);
     }
 
-    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Thread> addThread(@RequestBody Thread thread){
-        var newThread = threadService.createThread(thread);
-        var uri = URI.create("/api/v1/thread" + newThread.getThread_id());  // getThread_id fungerar ej?!
+    @Secured({"ROLE_USER", "ROLE_ADMIN" })
+    @PostMapping("/forums/{id}/threads")
+    public ResponseEntity<Thread> addThread(@RequestBody ThreadCreateDto thread, @PathVariable long id){
+        var newThread = threadService.createThread(thread, id);
+        var uri = URI.create("/api/v1/thread" + newThread.getThread_id());
         return ResponseEntity.created(uri).body(newThread);
     }
 
-    @PutMapping("/{id}")
+    @Secured("ROLE_ADMIN")
+    @PutMapping("/forums/{id}/threads")
     public void updateThread(@PathVariable Long id, @RequestBody Thread thread){
         threadService.update(id, thread);
     }
 
+    @Secured("ROLE_ADMIN")
     @DeleteMapping("/{id}")
     public void deleteThread(@PathVariable Long id){
         threadService.delete(id);

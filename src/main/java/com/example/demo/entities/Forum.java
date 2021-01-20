@@ -21,10 +21,6 @@ public class Forum {
 
 
 
-    public Long getforum_Id(){
-        return forum_id;
-    }
-
     @OneToMany
     @JoinColumn(name = "forum_id")
     private Set<Thread> threads;

@@ -1,6 +1,7 @@
 package com.example.demo.entities;
 
 
+import com.example.demo.dtos.UserDto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
@@ -24,7 +25,7 @@ public class User {
     private String password;
     private String roles;
 
-    /*
+
 
     public User(UserDto user) {
         this.username = user.getUsername();
@@ -33,7 +34,6 @@ public class User {
         this.roles = user.getRoles();
     }
 
-     */
 
     public User(String username, String email, String password, String roles){
         this.username = username;
