@@ -57,7 +57,7 @@ class Thread extends Vue {
   async created() {
     if (!this.thread) {
       let getThread = await fetch(
-        `http://localhost:3000/api/v1/threads/${this.$route.params.id}`
+        `/api/v1/threads/${this.$route.params.id}`
       );
       const thread = await getThread.json();
       this.$store.commit("setThread", thread);
@@ -70,7 +70,7 @@ class Thread extends Vue {
     let id = this.$route.params.id;
 
     let newMessage = await fetch(
-      `http://localhost:3000/api/v1/threads/${id}/messages`,
+      `/api/v1/threads/${id}/messages`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
