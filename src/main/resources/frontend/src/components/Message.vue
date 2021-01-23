@@ -3,7 +3,7 @@
     <div class="card container">
       <div class="card-body">
         <blockquote class="blockquote mb-0 message">
-          <p>{{message.message}}</p>
+          <p :class="{isWarning:message.warningMessage}">{{message.message}}</p>
           <footer class="blockquote-footer message">
             {{message.messageOwner.username}} replies:
           </footer>
@@ -32,5 +32,9 @@ export default Message;
 
 .message {
   font-size: 13px;
+}
+
+.isWarning{
+  color: red;
 }
 </style>
