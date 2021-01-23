@@ -32,16 +32,14 @@ class AdminPage extends Vue {
     }
     this.$store.dispatch("fetchAllUsers");
   }
-
 }
 
 export default AdminPage;
 </script>
 
 <style scoped>
-
-.admin{
-    font-size: 24px;
-    font-weight: bold;
+.admin {
+  font-size: 24px;
+  font-weight: bold;
 }
 </style>
