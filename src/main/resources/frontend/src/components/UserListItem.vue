@@ -1,31 +1,49 @@
 <template>
   <div>
-    <div class="card">
-      <div class="card-body ">
+    <div class="card mb-3">
+      <div class="card-body">
         <h5 class="card-title">{{ user.username }}</h5>
         <p class="card-text">
           {{ user.email }}
         </p>
         <span class="card-text">Role: {{ user.roles }}</span>
       </div>
-      <div>
-        <svg
-          @click="deleteUser"
-          xmlns="http://www.w3.org/2000/svg"
-          width="20"
-          height="20"
-          fill="currentColor"
-          class="bi bi-trash"
-          viewBox="0 0 16 16"
-        >
-          <path
-            d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"
-          />
-          <path
-            fill-rule="evenodd"
-            d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"
-          />
-        </svg>
+
+      <div v-if="!user.roles.includes('ADMIN')" class="col">
+        <div class="row">
+          <div class="input-group mb-3 col-xs-12 col-sm-12 col-md-6 col-xl-6">
+            <div class=" text-left  col-12 mb-3">
+              Add moderator to a forum
+            </div>
+
+            <div class="input-group-prepend">
+              <button class="btn btn-success" type="button">
+                Add
+              </button>
+            </div>
+            <select class="custom-select" id="addModerator">
+              <option selected>choose a forum...</option>
+              <option value="1">forum 1</option>
+              <option value="2">forum 2</option>
+            </select>
+          </div>
+
+          <div class="input-group mb-3 col-xs-12 col-sm-12 col-md-6 col-xl-6">
+            <div class=" text-left font-bold col-12 mb-3">
+              Remove moderator from a forum
+            </div>
+            <div class="input-group-prepend">
+              <button class="btn btn-success" type="button">
+                remove
+              </button>
+            </div>
+            <select class="custom-select" id="removeModerator">
+              <option selected>choose a forum...</option>
+              <option value="1">forum 1</option>
+              <option value="2">forum 2</option>
+            </select>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -40,14 +58,14 @@ class UserListItem extends Vue {
     required: true,
   })
   user;
-// HAVE TO FIX DELETE ISSUE X-TABLE WITH MESSAGES, AND THREADS SINCE THEY LOOK FOR USER_ID ASWELL THE PROGRAM STOPS WORKING
-//   async deleteUser() {
-//     console.log("Inne i deleteUser");
-//     await fetch(`/api/v1/users/${this.user.user_id}`, {
-//       method: "DELETE",
-//       credentials: "include",
-//     });
-//   }
+  // HAVE TO FIX DELETE ISSUE X-TABLE WITH MESSAGES, AND THREADS SINCE THEY LOOK FOR USER_ID ASWELL THE PROGRAM STOPS WORKING
+  //   async deleteUser() {
+  //     console.log("Inne i deleteUser");
+  //     await fetch(`/api/v1/users/${this.user.user_id}`, {
+  //       method: "DELETE",
+  //       credentials: "include",
+  //     });
+  //   }
 }
 
 export default UserListItem;
