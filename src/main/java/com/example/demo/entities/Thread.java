@@ -4,6 +4,7 @@ package com.example.demo.entities;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.core.annotation.Order;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -24,6 +25,7 @@ public class Thread {
     private String threadMessage;
     private Long timestamp;
     private Long forum_id;
+    private boolean lockedThread;
 
 
     public Thread(String title, String threadMessage, Long forum_id, User user){
@@ -32,10 +34,12 @@ public class Thread {
         this.forum_id = forum_id;
         this.timestamp = new Date().getTime();
         this.threadOwner = user;
+        this.lockedThread = false;
 
     }
 
     @OneToMany
+    @OrderBy("timestamp ASC")
     @JoinColumn(name = "thread_id")
     private Set<Message> messages;
 
