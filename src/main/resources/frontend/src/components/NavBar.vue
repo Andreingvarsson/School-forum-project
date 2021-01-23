@@ -1,8 +1,14 @@
 <template>
   <div class="navbar">
-    <h1 class="point" @click="goHome">GamingForum</h1>
-    <div  class="point" v-if="user ? user.roles.includes('ADMIN') : false" @click="goToAdmin">Admin</div>
-    <router-link v-if="!user" to="/login">Login</router-link>
+    <h1 class="point" @click="goTo('/')">GamingForum</h1>
+    <div
+      class="point"
+      v-if="user ? user.roles.includes('ADMIN') : false"
+      @click="goTo('/admin')"
+    >
+      Admin
+    </div>
+    <div class="point" v-if="!user" @click="goTo('/login')">Login</div>
     <div class="point" v-if="user" @click="logoutUser">Logout</div>
   </div>
 </template>
@@ -10,27 +16,20 @@
 <script>
 import { Vue, Component } from "vue-property-decorator";
 
-
 @Component({
-  components: {}
+  components: {},
 })
 class NavBar extends Vue {
-
   // Generic goto route method
-  goTo(route){
-    if(this.$route.path != route) this.$router.push({path: route})
+  goTo(route) {
+    if (this.$route.path != route) this.$router.push({ path: route });
   }
 
-  goHome() {
-    this.$router.push({ path: "/" });
-  }
-
-  goToAdmin(){
-    if(this.user.roles.includes("ADMIN")){
-      this.$router.push({path: "/admin"})
-    }
-  
-  }
+  // goToAdmin(){
+  //   if(this.user.roles.includes("ADMIN")){
+  //     this.$router.push({path: "/admin"})
+  //   }
+  // }
 
   get user() {
     return this.$store.state.loggedInUser;
@@ -51,8 +50,6 @@ class NavBar extends Vue {
         console.log(error);
       });
   }
-
-
 }
 export default NavBar;
 </script>
@@ -67,8 +64,8 @@ export default NavBar;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.point{
+.point {
   cursor: pointer;
+  color: rgba(1, 146, 1, 0.788);
 }
-
 </style>
