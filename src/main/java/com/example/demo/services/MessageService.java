@@ -58,7 +58,12 @@ public class MessageService {
         if(user == null){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find the user...");
         }
-        var newMessage = new Message(message.getCreatedMessage(), id, user);
+
+        var thread = threadRepo.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find the thread..."));
+        if(thread.isLockedThread()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "The thread is locked...");
+        }
+        var newMessage = new Message(message.getCreatedMessage(), message.isWarningMessage(), id, user);
         return messageRepo.save(newMessage);
     }
 
