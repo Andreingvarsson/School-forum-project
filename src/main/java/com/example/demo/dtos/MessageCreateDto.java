@@ -10,5 +10,6 @@ import lombok.NoArgsConstructor;
 public class MessageCreateDto {
 
     private String createdMessage;
+    private boolean warningMessage;
 
 }
