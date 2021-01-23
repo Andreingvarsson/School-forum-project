@@ -25,12 +25,6 @@ class NavBar extends Vue {
     if (this.$route.path != route) this.$router.push({ path: route });
   }
 
-  // goToAdmin(){
-  //   if(this.user.roles.includes("ADMIN")){
-  //     this.$router.push({path: "/admin"})
-  //   }
-  // }
-
   get user() {
     return this.$store.state.loggedInUser;
   }
