@@ -22,6 +22,7 @@ public class Forum {
 
 
     @OneToMany
+    @OrderBy("timestamp ASC")
     @JoinColumn(name = "forum_id")
     private Set<Thread> threads;
 
