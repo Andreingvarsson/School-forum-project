@@ -43,11 +43,13 @@ public class ThreadService {
       return threadRepo.save(newThread);
   }
 
-  public void update(Long id, Thread thread){
-      if(!threadRepo.existsById(id)){
-          throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find the thread with that id..");
-      }
-      thread.setForum_id(id);
+  public void update(Long id){
+      //if(!threadRepo.existsById(id)){
+      //    throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find the thread with that id..");
+     // }
+      var thread = threadRepo.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find the thread.."));
+      thread.setLockedThread(!thread.isLockedThread());
+
       threadRepo.save(thread);
   }
 

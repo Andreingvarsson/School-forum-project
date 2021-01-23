@@ -42,8 +42,8 @@ public class ThreadController {
 
     @Secured("ROLE_ADMIN")
     @PutMapping("/forums/{id}/threads")
-    public void updateThread(@PathVariable Long id, @RequestBody Thread thread){
-        threadService.update(id, thread);
+    public void updateThread(@PathVariable Long id){
+        threadService.update(id);
     }
 
     @Secured("ROLE_ADMIN")
