@@ -1,6 +1,6 @@
 <template>
   <div class="forum-list mt-2 mb-4">
-    <div @click="navigate" class="forum">{{ forum.name }}</div>
+    <div @click="navigate()" class="forum">{{ forum.name }}</div>
   </div>
 </template>
 
@@ -16,7 +16,9 @@ class ForumListItem extends Vue {
 
   navigate() {
     this.$store.commit("setForum", this.forum);
-    this.$router.push({ path: `/forum/${this.forum.forum_id}` });
+    if (this.$route.path != `/forum/${this.forum.forum_id}`) {
+      this.$router.push({ path: `/forum/${this.forum.forum_id}` });
+    }
   }
 }
 
