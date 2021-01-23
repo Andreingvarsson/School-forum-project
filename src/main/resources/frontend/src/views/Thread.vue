@@ -18,8 +18,11 @@
       :key="message.message_id"
       :message="message"
     />
-    <!-- v-for message etc to loop all messages.-->
-    <form @submit.prevent="createMessage" class="form-group mt-3">
+    <form
+      v-if="!this.thread.lockedThread"
+      @submit.prevent="createMessage"
+      class="form-group mt-3"
+    >
       <label for="message">Reply on post</label>
       <input
         type="message"
@@ -30,6 +33,22 @@
         placeholder="message.."
       />
       <button class="mt-2 button" type="submit">Send message</button>
+      <div
+        class="form-group"
+        v-if="user ? user.roles.includes('ADMIN') : false"
+      >
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            id="warningMessage"
+            v-model="message.warningMessage"
+          />
+          <label class="form-check-label" for="warningMessage">
+            Warning message
+          </label>
+        </div>
+      </div>
     </form>
   </div>
 </template>
@@ -44,11 +63,12 @@ import Message from "../components/Message";
 class Thread extends Vue {
   message = {
     createdMessage: null,
+    warningMessage: null,
   };
 
-  // get message(){
-  //   return this.$store.state.message;
-  // }
+  get user() {
+    return this.$store.state.loggedInUser;
+  }
 
   get thread() {
     return this.$store.state.thread;
@@ -56,9 +76,7 @@ class Thread extends Vue {
 
   async created() {
     if (!this.thread) {
-      let getThread = await fetch(
-        `/api/v1/threads/${this.$route.params.id}`
-      );
+      let getThread = await fetch(`/api/v1/threads/${this.$route.params.id}`);
       const thread = await getThread.json();
       this.$store.commit("setThread", thread);
       console.log(thread, "TREAD");
@@ -68,20 +86,19 @@ class Thread extends Vue {
   async createMessage() {
     console.log("Inne i createMessage funktionen");
     let id = this.$route.params.id;
+    console.log(this.message, "MESSAGE");
 
-    let newMessage = await fetch(
-      `/api/v1/threads/${id}/messages`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(this.message),
-        credentials: "include",
-      }
-    );
+    let newMessage = await fetch(`/api/v1/threads/${id}/messages`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(this.message),
+      credentials: "include",
+    });
     newMessage = await newMessage.json();
     console.log(newMessage, "new Message");
     this.$store.commit("createNewMessage", newMessage);
     this.message.createdMessage = null;
+    this.message.warningMessage = null;
   }
 }
 
