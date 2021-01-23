@@ -20,13 +20,17 @@ public class Message {
     private long timestamp;
     private String message;
     private Long thread_id;
+    private boolean warningMessage;
 
-    public Message(String message, Long thread_id, User user) {
+    public Message(String message, boolean warningMessage, Long thread_id, User user) {
         this.message = message;
         this.thread_id = thread_id;
         this.timestamp = new Date().getTime();
         this.messageOwner = user;
+        this.warningMessage = warningMessage;
     }
+
+
 
     @ManyToOne
     @JoinColumn(name = "user_id")
