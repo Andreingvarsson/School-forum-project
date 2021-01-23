@@ -19,6 +19,7 @@ import ForumList from "../src/components/ForumList";
 class App extends Vue {
   created() {
     this.$store.dispatch("fetchAllForums");
+    this.$store.dispatch("whoami");
   }
 }
 
