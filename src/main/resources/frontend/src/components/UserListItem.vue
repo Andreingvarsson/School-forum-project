@@ -34,7 +34,7 @@
             </div>
             <div class="input-group-prepend">
               <button class="btn btn-success" type="button">
-                remove
+                Remove
               </button>
             </div>
             <select class="custom-select" id="removeModerator">

@@ -6,10 +6,12 @@
         <p class="card-text message-text col-7">{{ thread.threadMessage }}</p>
         <!-- <span class="col-6 size">{{ thread.timestamp }}</span> -->
 
-        <div class="card-footer">
+        <div
+          class="card-footer"
+          v-if="user ? user.roles.includes('ADMIN') : false"
+        >
           <svg
             @click.stop="lockThread"
-            v-if="user ? user.roles.includes('ADMIN') : false"
             xmlns="http://www.w3.org/2000/svg"
             width="20"
             height="20"
