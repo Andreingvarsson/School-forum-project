@@ -1,7 +1,13 @@
 <template>
   <div class="thread ">
     <div class="card mt-3 container">
-      <div @click="navigate" class="card-body row">
+      <div
+        @click="navigate"
+        class="card-body row"
+        :class="{
+          isCardLocked: thread.lockedThread,
+        }"
+      >
         <h1 class="card-title title-text col-5">{{ thread.title }}</h1>
         <p class="card-text message-text col-7">{{ thread.threadMessage }}</p>
         <!-- <span class="col-6 size">{{ thread.timestamp }}</span> -->
@@ -9,14 +15,15 @@
         <div
           class="card-footer"
           v-if="user ? user.roles.includes('ADMIN') : false"
+          @click.stop="lockThread"
         >
           <svg
-            @click.stop="lockThread"
+            
             xmlns="http://www.w3.org/2000/svg"
             width="20"
             height="20"
             fill="currentColor"
-            class="bi bi-lock "
+            class="bi bi-lock point "
             viewBox="0 0 16 16"
             :class="{
               isLocked: thread.lockedThread,
@@ -103,6 +110,17 @@ export default ThreadListItem;
 
 .isOpen {
   color: green;
+  cursor: pointer;
+}
+
+.isCardLocked{
+  color: red;
+  border-color: red;
+  border-style: solid;
+  border-width: 1px;
+}
+
+.point{
   cursor: pointer;
 }
 </style>
