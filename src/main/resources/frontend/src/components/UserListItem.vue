@@ -23,8 +23,13 @@
             </div>
             <select class="custom-select" id="addModerator">
               <option selected>choose a forum...</option>
-              <option value="1">forum 1</option>
-              <option value="2">forum 2</option>
+              <option
+                :class="forum.name"
+                :value="forum.forum_id"
+                :key="forum.forum_id"
+                v-for="forum in forums"
+                >{{ forum.name }}</option
+              >
             </select>
           </div>
 
@@ -39,8 +44,13 @@
             </div>
             <select class="custom-select" id="removeModerator">
               <option selected>choose a forum...</option>
-              <option value="1">forum 1</option>
-              <option value="2">forum 2</option>
+              <option
+                :class="forum.name"
+                :value="forum.forum_id"
+                :key="forum.forum_id"
+                v-for="forum in forums"
+                >{{ forum.name }}</option
+              >
             </select>
           </div>
         </div>
@@ -58,6 +68,11 @@ class UserListItem extends Vue {
     required: true,
   })
   user;
+
+  get forums() {
+    return this.$store.state.forums;
+  }
+
   // HAVE TO FIX DELETE ISSUE X-TABLE WITH MESSAGES, AND THREADS SINCE THEY LOOK FOR USER_ID ASWELL THE PROGRAM STOPS WORKING
   //   async deleteUser() {
   //     console.log("Inne i deleteUser");
