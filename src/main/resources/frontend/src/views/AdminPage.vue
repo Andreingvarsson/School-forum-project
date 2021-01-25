@@ -1,7 +1,6 @@
 <template>
-  <div class="admin-page">
-    <div class="admin mb-3">{{ user.username }}</div>
-
+  <div class="admin-page container">
+    <div class="admin mb-3">{{ user.username }}</div> 
     <UserListItem v-for="user in users" :key="user.user_id" :user="user" />
   </div>
 </template>
@@ -24,13 +23,15 @@ class AdminPage extends Vue {
   }
 
   async created() {
+  
     if (!this.user) {
       await this.$store.dispatch("whoami");
-      if (this.user || this.user.roles.indcludes("ADMIN")) {
+      if (!this.user || !this.user.roles.includes("ADMIN")) {
         this.$router.push({ path: "/" });
       }
     }
     this.$store.dispatch("fetchAllUsers");
+  
   }
 }
 
