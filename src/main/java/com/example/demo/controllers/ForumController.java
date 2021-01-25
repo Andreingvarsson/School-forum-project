@@ -3,6 +3,7 @@ package com.example.demo.controllers;
 import com.example.demo.entities.Forum;
 import com.example.demo.services.ForumService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
@@ -40,15 +41,37 @@ public class ForumController {
         return ResponseEntity.created(uri).body(newForum);
     }
 
+    @PutMapping("/forums/{forum_id}/moderator/{user_id}")
+    @Secured("ROLE_ADMIN")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void addModeratorToForum(@PathVariable long forum_id, @PathVariable long user_id){
+        forumService.addModerator(forum_id, user_id);
+    }
+
+    @DeleteMapping("/forums/{forum_id}/moderator/{user_id}")
+    @Secured("ROLE_ADMIN")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void removeModeratorFromForum(@PathVariable long forum_id, @PathVariable long user_id){
+        forumService.removeModerator(forum_id, user_id);
+    }
+
+    /*
     @Secured("ROLE_ADMIN")
     @PutMapping("/forums/{id}")
     public void updateForum(@PathVariable Long id, @RequestBody Forum forum){
         forumService.update(id, forum);
     }
 
+     */
+
     @Secured("ROLE_ADMIN")
     @DeleteMapping("/forums/{id}")
     public void deleteForum(@PathVariable Long id){
         forumService.delete(id);
     }
+
+
+
+
+
 }
