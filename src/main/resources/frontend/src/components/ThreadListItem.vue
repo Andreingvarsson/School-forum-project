@@ -15,10 +15,10 @@
         <div
           class="card-footer"
           v-if="user ? user.roles.includes('ADMIN') : false"
-          @click.stop="lockThread"
+         
         >
           <svg
-            
+             @click.stop="lockThread"
             xmlns="http://www.w3.org/2000/svg"
             width="20"
             height="20"
@@ -74,6 +74,7 @@ class ThreadListItem extends Vue {
       this.$store.dispatch("fetchForumById", this.thread.forum_id);
     }
   }
+
 }
 
 export default ThreadListItem;
