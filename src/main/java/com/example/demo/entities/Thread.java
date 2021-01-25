@@ -1,10 +1,8 @@
 package com.example.demo.entities;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.core.annotation.Order;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -38,7 +36,7 @@ public class Thread {
 
     }
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @OrderBy("timestamp ASC")
     @JoinColumn(name = "thread_id")
     private Set<Message> messages;
