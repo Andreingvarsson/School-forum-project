@@ -1,7 +1,7 @@
 <template>
-  <div class="thread container ">
+  <div v-if="thread" class="thread container ">
     <div class="card">
-      <div v-if="thread" class="card-header title">
+      <div class="card-header title">
         {{ thread.title }}
       </div>
       <div class="card-body">
@@ -17,6 +17,7 @@
       v-for="message in thread.messages"
       :key="message.message_id"
       :message="message"
+      :forum_id="thread.forum_id"
     />
     <form
       v-if="!this.thread.lockedThread"
@@ -76,10 +77,8 @@ class Thread extends Vue {
 
   async created() {
     if (!this.thread) {
-      let getThread = await fetch(`/api/v1/threads/${this.$route.params.id}`);
-      const thread = await getThread.json();
-      this.$store.commit("setThread", thread);
-      console.log(thread, "TREAD");
+      console.log("INNE I Created thread")
+      await this.$store.dispatch("fetchThread", this.$route.params.id);
     }
   }
 
