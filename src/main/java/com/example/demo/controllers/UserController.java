@@ -34,11 +34,13 @@ public class UserController {
         return ResponseEntity.created(uri).body(newUser);
     }
 
+    @Secured("ROLE_ADMIN")
     @PutMapping("/{id}")
     public void updateUser(@PathVariable Long id, @RequestBody User user){
         userService.update(id, user);
     }
 
+    @Secured("ROLE_ADMIN")
     @DeleteMapping("/{id}")
     public void deleteUser(@PathVariable Long id){
         userService.delete(id);

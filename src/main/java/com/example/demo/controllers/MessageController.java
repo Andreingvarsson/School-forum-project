@@ -4,6 +4,8 @@ import com.example.demo.dtos.MessageCreateDto;
 import com.example.demo.entities.Message;
 import com.example.demo.services.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
@@ -12,13 +14,13 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/v1")
+@RequestMapping("/api/v1")
 public class MessageController {
 
     @Autowired
     MessageService messageService;
 
-
+/*
     @GetMapping("/messages")
     public ResponseEntity<List<Message>> getAllMessages(){
         var messages = messageService.findAllMessages();
@@ -32,7 +34,9 @@ public class MessageController {
 
     }
 
-    @Secured({"ROLE_USER", "ROLE_ADMIN" })
+ */
+
+    @Secured({"ROLE_USER", "ROLE_ADMIN", "ROLE_MODERATOR" })
     @PostMapping("/threads/{thread_id}/messages")
     public ResponseEntity<Message> addMessage(@RequestBody MessageCreateDto message, @PathVariable long thread_id){
         var newMessage = messageService.createMessage(message, thread_id);
@@ -40,20 +44,21 @@ public class MessageController {
         return ResponseEntity.created(uri).body(newMessage);
     }
 
+
+    /*
     @Secured("ROLE_ADMIN")
     @PutMapping("/threads/{id}/messages")
     public void updateMessage(@PathVariable Long id, @RequestBody Message message){
         messageService.update(id, message);
     }
+     */
 
-    @Secured("ROLE_ADMIN")
-    @DeleteMapping("/messages/{id}")
+    @Secured({"ROLE_ADMIN", "ROLE_MODERATOR"})
+    @DeleteMapping("/message/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteMessage(@PathVariable Long id){
         messageService.delete(id);
     }
-
-
-
 }
 
 

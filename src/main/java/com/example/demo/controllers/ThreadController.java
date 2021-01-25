@@ -2,7 +2,6 @@ package com.example.demo.controllers;
 
 import com.example.demo.dtos.ThreadCreateDto;
 import com.example.demo.entities.Thread;
-import com.example.demo.entities.User;
 import com.example.demo.services.ThreadService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -14,7 +13,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/v1")
+@RequestMapping("/api/v1")
 public class ThreadController {
 
     @Autowired
@@ -32,7 +31,7 @@ public class ThreadController {
         return ResponseEntity.ok(thread);
     }
 
-    @Secured({"ROLE_USER", "ROLE_ADMIN" })
+    @Secured({"ROLE_USER", "ROLE_ADMIN", "ROLE_MODERATOR" })
     @PostMapping("/forums/{id}/threads")
     public ResponseEntity<Thread> addThread(@RequestBody ThreadCreateDto thread, @PathVariable long id){
         var newThread = threadService.createThread(thread, id);
@@ -40,7 +39,7 @@ public class ThreadController {
         return ResponseEntity.created(uri).body(newThread);
     }
 
-    @Secured("ROLE_ADMIN")
+    @Secured({"ROLE_ADMIN", "ROLE_MODERATOR"})
     @PutMapping("/forums/{id}/threads")
     public void updateThread(@PathVariable Long id){
         threadService.update(id);
