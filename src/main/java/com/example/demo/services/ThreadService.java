@@ -2,7 +2,7 @@ package com.example.demo.services;
 
 import com.example.demo.dtos.ThreadCreateDto;
 import com.example.demo.entities.Thread;
-import com.example.demo.entities.User;
+import com.example.demo.repositories.ForumRepo;
 import com.example.demo.repositories.ThreadRepo;
 import com.example.demo.repositories.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +25,9 @@ public class ThreadService {
     @Autowired
     UserRepo userRepo;
 
+    @Autowired
+    ForumRepo forumRepo;
+
   public List<Thread> findAllThreads(){
       return threadRepo.findAll();
   }
@@ -44,12 +47,18 @@ public class ThreadService {
   }
 
   public void update(Long id){
-      //if(!threadRepo.existsById(id)){
-      //    throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find the thread with that id..");
-     // }
-      var thread = threadRepo.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find the thread.."));
-      thread.setLockedThread(!thread.isLockedThread());
 
+      var username = myUserDetailsService.getCurrentUser();
+      var user = userRepo.findByUsername(username);
+
+      var thread = threadRepo.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find the thread.."));
+      if(!user.getRoles().contains("ADMIN")){
+          var forum = forumRepo.findById(thread.getForum_id()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "could not find forum of that thread.."));
+          if(!user.getModeratedForums().contains(forum.getForum_id())){
+              throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Not authorized..");
+          }
+      }
+      thread.setLockedThread(!thread.isLockedThread());
       threadRepo.save(thread);
   }
 
