@@ -1,20 +1,23 @@
 package com.example.demo.entities;
 
-
 import com.example.demo.dtos.UserDto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "users")
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class User {
 
     @Id
@@ -25,8 +28,6 @@ public class User {
     private String password;
     private String roles;
 
-
-
     public User(UserDto user) {
         this.username = user.getUsername();
         this.email = user.getEmail();
@@ -34,12 +35,24 @@ public class User {
         this.roles = user.getRoles();
     }
 
-
     public User(String username, String email, String password, String roles){
         this.username = username;
         this.email = email;
         this.password = password;
         this.roles = roles;
+        this.moderatedForums = Set.of();
+    }
+
+    @ManyToMany(mappedBy = "moderators", fetch = FetchType.LAZY)
+    private Set<Forum> moderatedForums;
+
+    public List<Long> getModeratedForums(){
+        return moderatedForums.stream().map(forum -> forum.getForum_id()).collect(Collectors.toList());
+    }
+
+    public void removeForum(Forum forum){
+        this.moderatedForums.remove(forum);
+        forum.getModerators().remove(this);
     }
 
     // Constructor for anonymous user.
