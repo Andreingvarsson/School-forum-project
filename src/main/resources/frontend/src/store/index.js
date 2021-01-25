@@ -67,16 +67,24 @@ export default new Vuex.Store({
       commit("setForum", forum);
     },
 
-    async fetchMessageByThreadId({commit}, id){
-      console.log("INNE I MESSAGEBYTHREADID");
-      const messageResult = await fetch(`/api/v1/threads/${id}/messages`);
-      const message = await messageResult.json();
-      console.log(message, "ETT MESSAGE");
-      commit("setMessage", message);
+    // async fetchMessageByThreadId({commit}, id){
+    //   console.log("INNE I MESSAGEBYTHREADID");
+    //   const messageResult = await fetch(`/api/v1/threads/${id}/messages`);
+    //   const message = await messageResult.json();
+    //   console.log(message, "ETT MESSAGE");
+    //   commit("setMessage", message);
+    // },
+
+    async fetchThread({commit}, id){
+  const getThread = await fetch(`/api/v1/threads/${id}`);
+  const thread = await getThread.json();
+  commit("setThread", thread);
+  console.log(thread, "THREAD");
+      
     },
 
     async fetchAllUsers({commit}){
-      console.log("INNE I FETCH USERS BY ID");
+      console.log("INNE IFETCHUSERS ");
       const userResult = await fetch("/api/v1/users");
       const user = await userResult.json();
       console.log(user, "Alla users");
