@@ -61,11 +61,6 @@ class CreateThread extends Vue {
     return this.$store.state.loggedInUser;
   }
 
-  // created(){
-  //   if(!this.store.state.loggedInUser){
-  //     this.$router.push({path: "/login"})
-  //   }
-  // }
 }
 export default CreateThread;
 </script>
