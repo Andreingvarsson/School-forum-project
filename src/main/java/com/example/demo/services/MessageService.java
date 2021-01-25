@@ -55,20 +55,27 @@ public class MessageService {
     public Message createMessage(MessageCreateDto message, Long id){
         var username = myUserDetailsService.getCurrentUser();
         var user = userRepo.findByUsername(username);
+
         if(user == null){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find the user...");
         }
 
         var thread = threadRepo.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find the thread..."));
         if(thread.isLockedThread()){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "The thread is locked...");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The thread is locked...");
         }
-        var newMessage = new Message(message.getCreatedMessage(), message.isWarningMessage(), id, user);
+        var newMessage = new Message(message.getCreatedMessage(), id, user);
+
+        if(user.getRoles().contains("ADMIN") || user.getModeratedForums().contains(thread.getForum_id())){
+         newMessage.setWarningMessage(message.isWarningMessage());
+        }else{
+            newMessage.setWarningMessage(false);
+        }
         return messageRepo.save(newMessage);
     }
 
 
-
+/*
     public void update(Long id, Message message) {
         if(!messageRepo.existsById(id)){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find the message with that id..");
@@ -76,17 +83,32 @@ public class MessageService {
         message.setMessage_id(id);
         messageRepo.save(message);
     }
+ */
 
 
     public void delete(Long id) {
+        /*
         if(!messageRepo.existsById(id)){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find the message with that id..");
         }
-        messageRepo.deleteById(id);
+         */
+        var message = messageRepo.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "could not find message..."));
+
+        var username = myUserDetailsService.getCurrentUser();
+        var user = userRepo.findByUsername(username);
+
+        if(user == null){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find the user...");
+        }
+        var thread = threadRepo.findById(message.getThread_id()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find the thread..."));
+
+        if(user.getRoles().contains("ADMIN") || user.getModeratedForums().contains(thread.getForum_id())){
+            System.out.println("INNE I SKITEN");
+            messageRepo.deleteById(message.getMessage_id());
+        }else{
+           throw new ResponseStatusException(HttpStatus.FORBIDDEN, "not authorized to delete message...");
+        }
     }
-
-
-
 }
 
 
