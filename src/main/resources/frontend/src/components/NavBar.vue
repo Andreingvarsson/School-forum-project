@@ -20,7 +20,6 @@ import { Vue, Component } from "vue-property-decorator";
   components: {},
 })
 class NavBar extends Vue {
-  // Generic goto route method
   goTo(route) {
     if (this.$route.path != route) this.$router.push({ path: route });
   }

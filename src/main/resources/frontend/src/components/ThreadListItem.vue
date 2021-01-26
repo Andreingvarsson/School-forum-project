@@ -10,15 +10,13 @@
       >
         <h1 class="card-title title-text col-5">{{ thread.title }}</h1>
         <p class="card-text message-text col-7">{{ thread.threadMessage }}</p>
-        <!-- <span class="col-6 size">{{ thread.timestamp }}</span> -->
 
         <div
           class="card-footer"
           v-if="user ? user.roles.includes('ADMIN') : false"
-         
         >
           <svg
-             @click.stop="lockThread"
+            @click.stop="lockThread"
             xmlns="http://www.w3.org/2000/svg"
             width="20"
             height="20"
@@ -74,7 +72,6 @@ class ThreadListItem extends Vue {
       this.$store.dispatch("fetchForumById", this.thread.forum_id);
     }
   }
-
 }
 
 export default ThreadListItem;
@@ -114,14 +111,14 @@ export default ThreadListItem;
   cursor: pointer;
 }
 
-.isCardLocked{
+.isCardLocked {
   color: red;
   border-color: red;
   border-style: solid;
   border-width: 1px;
 }
 
-.point{
+.point {
   cursor: pointer;
 }
 </style>

@@ -39,7 +39,7 @@ const routes = [
     path: "/admin",
     name: "Admin",
     component: AdminPage,
-  }
+  },
 ];
 
 const router = new VueRouter({

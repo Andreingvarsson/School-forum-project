@@ -3,13 +3,17 @@
     <div class="card container">
       <div class="card-body">
         <blockquote class="blockquote mb-0 message">
-          <p :class="{isWarning:message.warningMessage}">{{message.message}}</p>
+          <p :class="{ isWarning: message.warningMessage }">
+            {{ message.message }}
+          </p>
           <footer class="blockquote-footer message">
-            {{message.messageOwner.username}} replies:
+            {{ message.messageOwner.username }} replies:
           </footer>
         </blockquote>
       </div>
-      <div v-if="admin || moderator" @click="deleteMessage" class="del">delete</div>
+      <div v-if="admin || moderator" @click="deleteMessage" class="del">
+        delete
+      </div>
     </div>
   </div>
 </template>
@@ -19,16 +23,16 @@ import { Vue, Component, Prop } from "vue-property-decorator";
 
 @Component()
 class Message extends Vue {
-    @Prop({
+  @Prop({
     required: true,
   })
   message;
-   @Prop({
+  @Prop({
     required: true,
   })
   forum_id;
 
-  get user(){
+  get user() {
     return this.$store.state.loggedInUser;
   }
 
@@ -36,45 +40,41 @@ class Message extends Vue {
     return this.$store.state.forums;
   }
 
-    get admin(){
-    return this.user ? this.user.roles.includes('ADMIN') : false;
+  get admin() {
+    return this.user ? this.user.roles.includes("ADMIN") : false;
   }
 
-    get moderator(){
-      console.log(this.forum_id, "FORUMID")
-    return this.user?.moderatedForums.includes(this.forum_id)
+  get moderator() {
+    console.log(this.forum_id, "FORUMID");
+    return this.user?.moderatedForums.includes(this.forum_id);
   }
 
-      async deleteMessage() {
-      console.log("Inne i deleteUser");
-     let response = await fetch(`/api/v1/message/${this.message.message_id}`, {
-        method: "DELETE",
-      
-      });
-      console.log(response, "DELETEMESSAGE RESPONS")
-      if(response.status === 204){
-        await this.$store.dispatch("fetchThread", this.$route.params.id)
-      }
+  async deleteMessage() {
+    console.log("Inne i deleteUser");
+    let response = await fetch(`/api/v1/message/${this.message.message_id}`, {
+      method: "DELETE",
+    });
+    console.log(response, "DELETEMESSAGE RESPONS");
+    if (response.status === 204) {
+      await this.$store.dispatch("fetchThread", this.$route.params.id);
     }
-
+  }
 }
 
 export default Message;
 </script>
 
 <style scoped>
-
 .message {
   font-size: 13px;
 }
 
-.isWarning{
+.isWarning {
   color: red;
 }
 
-.del:hover{
+.del:hover {
   color: rgb(230, 62, 62);
   cursor: pointer;
-  
 }
 </style>

@@ -34,21 +34,21 @@ export default new Vuex.Store({
     setLoggedInUser(state, data) {
       state.loggedInUser = data;
     },
-    setMessage(state, data){
+    setMessage(state, data) {
       state.message = data;
     },
-    setMessages(state, data){
+    setMessages(state, data) {
       state.messages = data;
     },
-    createNewMessage(state, data){
+    createNewMessage(state, data) {
       state.thread.messages.push(data);
     },
-    setUser(state, data){
+    setUser(state, data) {
       state.user = data;
     },
-    setUsers(state, data){
+    setUsers(state, data) {
       state.users = data;
-    }
+    },
   },
   actions: {
     async fetchAllForums({ commit }) {
@@ -75,15 +75,14 @@ export default new Vuex.Store({
     //   commit("setMessage", message);
     // },
 
-    async fetchThread({commit}, id){
-  const getThread = await fetch(`/api/v1/threads/${id}`);
-  const thread = await getThread.json();
-  commit("setThread", thread);
-  console.log(thread, "THREAD");
-      
+    async fetchThread({ commit }, id) {
+      const getThread = await fetch(`/api/v1/threads/${id}`);
+      const thread = await getThread.json();
+      commit("setThread", thread);
+      console.log(thread, "THREAD");
     },
 
-    async fetchAllUsers({commit}){
+    async fetchAllUsers({ commit }) {
       console.log("INNE IFETCHUSERS ");
       const userResult = await fetch("/api/v1/users");
       const user = await userResult.json();
