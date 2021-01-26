@@ -1,6 +1,6 @@
 <template>
   <div class="admin-page container">
-    <div class="admin mb-3">{{ user.username }}</div>
+    <div v-if="user" class="admin mb-3">{{ user.username }}</div>
     <UserListItem v-for="user in users" :key="user.user_id" :user="user" />
   </div>
 </template>
