@@ -70,7 +70,7 @@ class ThreadListItem extends Vue {
     );
     console.log(response);
     console.log(this.thread.forum_id);
-    if (response.status === 200) {
+    if (response.status === 204) {
       this.$store.dispatch("fetchForumById", this.thread.forum_id);
     }
   }
