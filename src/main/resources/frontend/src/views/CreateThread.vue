@@ -1,5 +1,5 @@
 <template>
-  <div class="thread container">
+  <div v-if="user" class="thread container">
     <form @submit.prevent="createThread" class="mx-auto">
       <div class="form-group font mt-3">
         <label for="title">Thread title</label>
@@ -37,30 +37,26 @@ class CreateThread extends Vue {
     threadMessage: null,
   };
 
+  get user() {
+    return this.$store.state.loggedInUser;
+  }
+
   async createThread() {
     console.log("Inne i createThread funktionen");
     let id = this.$route.params.id;
 
-    let newThread = await fetch(
-      `/api/v1/forums/${id}/threads`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(this.thread),
-        credentials: "include",
-      }
-    );
+    let newThread = await fetch(`/api/v1/forums/${id}/threads`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(this.thread),
+      credentials: "include",
+    });
     newThread = await newThread.json();
     console.log(newThread, "new Thread");
     this.$store.commit("createNewThread", newThread);
     this.thread.threadTitle = null;
     this.thread.threadMessage = null;
   }
-
-  get user() {
-    return this.$store.state.loggedInUser;
-  }
-
 }
 export default CreateThread;
 </script>

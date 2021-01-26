@@ -20,7 +20,7 @@
       :forum_id="thread.forum_id"
     />
     <form
-      v-if="!this.thread.lockedThread"
+      v-if="!this.thread.lockedThread && user"
       @submit.prevent="createMessage"
       class="form-group mt-3"
     >
