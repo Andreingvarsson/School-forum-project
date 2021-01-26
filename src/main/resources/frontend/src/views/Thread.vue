@@ -34,10 +34,7 @@
         placeholder="message.."
       />
       <button class="mt-2 button" type="submit">Send message</button>
-      <div
-        class="form-group"
-        v-if="user ? user.roles.includes('ADMIN') : false"
-      >
+      <div class="form-group" v-if="admin || moderator">
         <div class="form-check">
           <input
             class="form-check-input"
@@ -75,11 +72,17 @@ class Thread extends Vue {
     return this.$store.state.thread;
   }
 
-  async created() {
-    if (!this.thread) {
-      console.log("INNE I Created thread")
-      await this.$store.dispatch("fetchThread", this.$route.params.id);
-    }
+  get forums() {
+    return this.$store.state.forums;
+  }
+
+  get admin() {
+    return this.user ? this.user.roles.includes("ADMIN") : false;
+  }
+
+  get moderator() {
+    console.log(this.thread.forum_id, "FORUMID Thread");
+    return this.user?.moderatedForums.includes(this.thread.forum_id);
   }
 
   async createMessage() {
@@ -98,6 +101,13 @@ class Thread extends Vue {
     this.$store.commit("createNewMessage", newMessage);
     this.message.createdMessage = null;
     this.message.warningMessage = null;
+  }
+
+  async created() {
+    if (!this.thread) {
+      console.log("INNE I Created thread");
+      await this.$store.dispatch("fetchThread", this.$route.params.id);
+    }
   }
 }
 
