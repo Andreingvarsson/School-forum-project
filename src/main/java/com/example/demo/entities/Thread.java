@@ -41,7 +41,7 @@ public class Thread {
     @JoinColumn(name = "thread_id")
     private Set<Message> messages;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
     private User threadOwner;
 

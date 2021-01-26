@@ -2,6 +2,8 @@ package com.example.demo.services;
 
 import com.example.demo.dtos.UserDto;
 import com.example.demo.entities.User;
+import com.example.demo.repositories.MessageRepo;
+import com.example.demo.repositories.ThreadRepo;
 import com.example.demo.repositories.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,6 +17,12 @@ public class UserService {
 
     @Autowired
     UserRepo userRepo;
+
+    @Autowired
+    ThreadRepo threadRepo;
+
+    @Autowired
+    MessageRepo messageRepo;
 
     @Autowired
     MyUserDetailsService myUserDetailService;
@@ -51,13 +59,16 @@ public class UserService {
 
 
     public void delete(Long id) {
-        var username = myUserDetailService.getCurrentUser();
+      // var user = userRepo.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find the user with that id.."));
 
 
         if(!userRepo.existsById(id)){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find the user with that id..");
         }
         userRepo.deleteById(id);
+        threadRepo.deleteUserInThreadTable(id);
+        messageRepo.deleteUserInMessagesTable(id);
+
     }
 }
 
