@@ -9,7 +9,7 @@
           </footer>
         </blockquote>
       </div>
-      <div v-if="admin || moderator" @click="deleteMessage">delete</div>
+      <div v-if="admin || moderator" @click="deleteMessage" class="del">delete</div>
     </div>
   </div>
 </template>
@@ -70,5 +70,11 @@ export default Message;
 
 .isWarning{
   color: red;
+}
+
+.del:hover{
+  color: rgb(230, 62, 62);
+  cursor: pointer;
+  
 }
 </style>
