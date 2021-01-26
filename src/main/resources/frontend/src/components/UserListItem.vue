@@ -17,11 +17,19 @@
             </div>
 
             <div class="input-group-prepend">
-              <button class="btn btn-success" type="button" @click="addModerator(add)" > 
+              <button
+                class="btn btn-success"
+                type="button"
+                @click="addModerator(add)"
+              >
                 Add
               </button>
             </div>
-            <select class="custom-select" id="addModerator" v-on:change="setAdd($event.target.value)">
+            <select
+              class="custom-select"
+              id="addModerator"
+              v-on:change="setAdd($event.target.value)"
+            >
               <option selected>choose a forum...</option>
               <option
                 :class="forum.name"
@@ -38,11 +46,19 @@
               Remove moderator from a forum
             </div>
             <div class="input-group-prepend">
-              <button class="btn btn-success" type="button" @click="removeModerator(remove)"> 
+              <button
+                class="btn btn-success"
+                type="button"
+                @click="removeModerator(remove)"
+              >
                 Remove
               </button>
             </div>
-            <select class="custom-select" id="removeModerator" v-on:change="setRemove($event.target.value)">
+            <select
+              class="custom-select"
+              id="removeModerator"
+              v-on:change="setRemove($event.target.value)"
+            >
               <option selected>choose a forum...</option>
               <option
                 :class="forum.name"
@@ -54,7 +70,7 @@
             </select>
           </div>
         </div>
-        <div>delete</div>
+        <div class="del" @click="deleteUser">delete</div>
       </div>
     </div>
   </div>
@@ -69,88 +85,81 @@ class UserListItem extends Vue {
     required: true,
   })
   user;
-  
+
   add = null;
   remove = null;
-
 
   get forums() {
     return this.$store.state.forums;
   }
 
-  get admin(){
-    return this.user ? this.user.roles.includes('ADMIN') : false;
+  get admin() {
+    return this.user ? this.user.roles.includes("ADMIN") : false;
   }
 
-  get moderator(){
-    return this.user?.moderatedForums.includes(this.forum_id)
+  get moderator() {
+    return this.user?.moderatedForums.includes(this.forum_id);
   }
 
-  
-    async deleteUser() {
-      console.log("Inne i deleteUser");
-      await fetch(`/api/v1/users/${this.user.user_id}`, {
-        method: "DELETE",
-        credentials: "include",
-      });
-    }
+  setAdd(e) {
+    this.add = e;
+  }
 
-get forumsAvailableForModeration(){
-  return this.forums.filter(
-    (forum) => !this.user.moderatedForums.includes(forum.forum_id)
-  )
-}
+  setRemove(e) {
+    this.remove = e;
+  }
 
-get forumsWithModeration(){
-  return this.forums.filter(
-    (forum) => this.user.moderatedForums.includes(forum.forum_id)
-  )
-}
+  get forumsAvailableForModeration() {
+    return this.forums.filter(
+      (forum) => !this.user.moderatedForums.includes(forum.forum_id)
+    );
+  }
 
-setAdd(e){
-  this.add = e;
-}
-
-setRemove(e){
-  this.remove = e;
-}
-
-  // Finish updates on moderator!
+  get forumsWithModeration() {
+    return this.forums.filter((forum) =>
+      this.user.moderatedForums.includes(forum.forum_id)
+    );
+  }
 
   async addModerator(id) {
-    console.log("Inne i addModerator", "ID = ", id)
+    console.log("Inne i addModerator", "ID = ", id);
     let response = await fetch(
-    `/api/v1/forums/${id}/moderator/${this.user.user_id}`,
-    { 
-    method: "PUT", 
-    credentials: "include" 
-    }
+      `/api/v1/forums/${id}/moderator/${this.user.user_id}`,
+      {
+        method: "PUT",
+        credentials: "include",
+      }
     );
-    if(response.status === 204){ 
-      this.$store.dispatch("fetchAllUsers", this.$store.state.user)
+    if (response.status === 204) {
+      this.$store.dispatch("fetchAllUsers", this.$store.state.user);
     }
-    console.log(response)
+    console.log(response);
   }
 
-    async removeModerator(id) {
-      console.log("Inne i removeModerator")
+  async removeModerator(id) {
+    console.log("Inne i removeModerator");
     let response = await fetch(
-    `/api/v1/forums/${id}/moderator/${this.user.user_id}`,
-    { 
-    method: "DELETE", 
-    credentials: "include" 
-    }
+      `/api/v1/forums/${id}/moderator/${this.user.user_id}`,
+      {
+        method: "DELETE",
+        credentials: "include",
+      }
     );
-    if(response.status === 204){
-      this.$store.dispatch("fetchAllUsers", this.$store.state.user)
-    
+    if (response.status === 204) {
+      this.$store.dispatch("fetchAllUsers", this.$store.state.user);
     }
-    console.log(response)
+    console.log(response);
   }
 
-  created(){
-
+  async deleteUser() {
+    console.log("Inne i deleteUser");
+    await fetch(`/api/v1/users/${this.user.user_id}`, {
+      method: "DELETE",
+      credentials: "include",
+    });
   }
+
+  created() {}
 }
 
 export default UserListItem;
@@ -160,5 +169,10 @@ export default UserListItem;
 .card-text {
   font-size: 15px;
   font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+}
+
+.del:hover {
+  color: rgb(230, 62, 62);
+  cursor: pointer;
 }
 </style>
