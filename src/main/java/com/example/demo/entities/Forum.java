@@ -20,7 +20,7 @@ public class Forum {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long forum_id;
     private String name;
-    
+
     @OneToMany
     @OrderBy("timestamp ASC")
     @JoinColumn(name = "forum_id")

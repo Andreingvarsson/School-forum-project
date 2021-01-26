@@ -33,6 +33,7 @@ public class ForumController {
         return ResponseEntity.ok(forum);
     }
 
+    // Comment out so no one can use to add more forums?!? **********
     @Secured("ROLE_ADMIN")
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Forum> addForum(@RequestBody Forum forum){
@@ -64,8 +65,10 @@ public class ForumController {
 
      */
 
-    @Secured("ROLE_ADMIN")
+
     @DeleteMapping("/forums/{id}")
+    @Secured("ROLE_ADMIN")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteForum(@PathVariable Long id){
         forumService.delete(id);
     }

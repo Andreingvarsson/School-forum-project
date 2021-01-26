@@ -40,6 +40,7 @@ public class UserService {
         return userRepo.save(newUser);
     }
 
+    // do i really need this one?? *****************************************
     public void update(Long id, User user) {
         if(!userRepo.existsById(id)){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find the user with that id..");
@@ -50,6 +51,9 @@ public class UserService {
 
 
     public void delete(Long id) {
+        var username = myUserDetailService.getCurrentUser();
+
+
         if(!userRepo.existsById(id)){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find the user with that id..");
         }

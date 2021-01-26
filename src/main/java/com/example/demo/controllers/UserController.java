@@ -4,6 +4,7 @@ import com.example.demo.dtos.UserDto;
 import com.example.demo.entities.User;
 import com.example.demo.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.annotation.Validated;
@@ -36,12 +37,14 @@ public class UserController {
 
     @Secured("ROLE_ADMIN")
     @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateUser(@PathVariable Long id, @RequestBody User user){
         userService.update(id, user);
     }
 
     @Secured("ROLE_ADMIN")
     @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteUser(@PathVariable Long id){
         userService.delete(id);
 

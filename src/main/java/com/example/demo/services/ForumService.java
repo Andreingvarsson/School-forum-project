@@ -32,6 +32,7 @@ public class ForumService {
         return forumRepo.save(forum);
     }
 
+    // DONT THINK I USE THIS ONE; MIGHT DELETE.**********************
     public void update(Long id, Forum forum) {
         if(!forumRepo.existsById(id)){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find the forum with that id..");

@@ -5,6 +5,7 @@ import com.example.demo.entities.Thread;
 import com.example.demo.services.ThreadService;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +20,8 @@ public class ThreadController {
     @Autowired
     ThreadService threadService;
 
+
+    // be able to Use this one?!?! *******
     @GetMapping
     public ResponseEntity<List<Thread>> getAllThreads(){
         var threads = threadService.findAllThreads();
@@ -31,22 +34,27 @@ public class ThreadController {
         return ResponseEntity.ok(thread);
     }
 
-    @Secured({"ROLE_USER", "ROLE_ADMIN", "ROLE_MODERATOR" })
+
     @PostMapping("/forums/{id}/threads")
+    @Secured({"ROLE_USER", "ROLE_ADMIN", "ROLE_MODERATOR" })
     public ResponseEntity<Thread> addThread(@RequestBody ThreadCreateDto thread, @PathVariable long id){
         var newThread = threadService.createThread(thread, id);
         var uri = URI.create("/api/v1/thread" + newThread.getThread_id());
         return ResponseEntity.created(uri).body(newThread);
     }
 
-    @Secured({"ROLE_ADMIN", "ROLE_MODERATOR"})
+
     @PutMapping("/forums/{id}/threads")
+    @Secured({"ROLE_ADMIN", "ROLE_MODERATOR"})
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateThread(@PathVariable Long id){
         threadService.update(id);
     }
 
-    @Secured("ROLE_ADMIN")
+
     @DeleteMapping("/{id}")
+    @Secured("ROLE_ADMIN")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteThread(@PathVariable Long id){
         threadService.delete(id);
     }

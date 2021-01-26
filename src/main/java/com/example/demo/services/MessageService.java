@@ -27,6 +27,7 @@ public class MessageService {
     @Autowired
     MyUserDetailsService myUserDetailsService;
 
+    // dont use these 2 below so might delete! ***********
     public List<Message> findAllMessages(){
         return messageRepo.findAll();
     }
