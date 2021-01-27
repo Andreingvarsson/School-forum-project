@@ -25,7 +25,6 @@ public class ForumController {
     @GetMapping("/forums")
     public ResponseEntity<List<Forum>> getAllForums() {
         var forums = forumService.findAllForums();
-        System.out.println("Hämtar alla forums");
         return ResponseEntity.ok(forums);
     }
 

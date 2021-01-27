@@ -52,6 +52,7 @@ public class UserService {
         return userRepo.save(newUser);
     }
 
+    /*
     // do i really need this one?? *****************************************
     public void update(Long id, User user) {
         if (!userRepo.existsById(id)) {
@@ -60,6 +61,8 @@ public class UserService {
         user.setUser_id(id);
         userRepo.save(user);
     }
+
+     */
 
 
     public void delete(Long id) {

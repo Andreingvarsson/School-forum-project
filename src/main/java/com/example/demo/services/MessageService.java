@@ -88,11 +88,7 @@ public class MessageService {
 
 
     public void delete(Long id) {
-        /*
-        if(!messageRepo.existsById(id)){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find the message with that id..");
-        }
-         */
+
         var message = messageRepo.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "could not find message..."));
 
         var username = myUserDetailsService.getCurrentUser();

@@ -26,7 +26,6 @@ public class UserController {
     @GetMapping
     public ResponseEntity<List<User>> getAllUsers() {
         var users = userService.getAllUsers();
-        System.out.println("Hämtar alla users");
         return ResponseEntity.ok(users);
     }
 

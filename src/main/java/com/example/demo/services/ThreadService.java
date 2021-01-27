@@ -28,7 +28,7 @@ public class ThreadService {
     @Autowired
     ForumRepo forumRepo;
 
-    // Do i need this one?? *******
+
     public List<Thread> findAllThreads() {
         return threadRepo.findAll();
     }
