@@ -32,7 +32,7 @@
           class="form-control"
           id="password"
           v-model="user.password"
-          placeholder="Password.."
+          placeholder="Password requires 6-12 characters.."
         />
       </div>
       <button type="submit" class="btn btn-primary">Register</button>
