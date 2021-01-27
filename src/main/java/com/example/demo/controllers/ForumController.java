@@ -50,7 +50,7 @@ public class ForumController {
         forumService.removeModerator(forum_id, user_id);
     }
 
-        /*
+    /*
     // Comment out so no one can use to add more forums!
     @Operation(summary = "Required role:: ADMIN")
     @Secured("ROLE_ADMIN")
@@ -60,9 +60,7 @@ public class ForumController {
         var uri = URI.create("/api/v1/forum/" + newForum.getForum_id());
         return ResponseEntity.created(uri).body(newForum);
     }
-     */
 
-    /*
     // incase admin wants to update a forum...
     @Operation(summary = "Required role:: ADMIN")
     @Secured("ROLE_ADMIN")
@@ -70,9 +68,7 @@ public class ForumController {
     public void updateForum(@PathVariable Long id, @RequestBody Forum forum){
         forumService.update(id, forum);
     }
-     */
 
-    /*
     // Incase admin wants to delete a forum...
     @Operation(summary = "Required role:: ADMIN")
     @DeleteMapping("/forums/{id}")
@@ -81,5 +77,5 @@ public class ForumController {
     public void deleteForum(@PathVariable Long id){
         forumService.delete(id);
     }
-     */
+ */
 }
