@@ -34,7 +34,6 @@ public class MessageController {
     public ResponseEntity<Message> getMessageById(@PathVariable Long id) {
         var message = messageService.getMessageById(id);
         return ResponseEntity.ok(message);
-
     }
 
     @Operation(summary = "Required role:: USER, ADMIN, MODERATOR")
@@ -45,7 +44,6 @@ public class MessageController {
         var uri = URI.create("/api/v1/messages" + newMessage.getMessage_id());
         return ResponseEntity.created(uri).body(newMessage);
     }
-
 
     @Operation(summary = "Required role:: ADMIN, MODERATOR")
     @Secured({"ROLE_ADMIN", "ROLE_MODERATOR"})

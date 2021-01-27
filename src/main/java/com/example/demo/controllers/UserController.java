@@ -37,18 +37,6 @@ public class UserController {
         return ResponseEntity.created(uri).body(newUser);
     }
 
-
-    /*
-    @Operation(summary = "Required role:: ADMIN")
-    @Secured("ROLE_ADMIN")
-    @PutMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateUser(@PathVariable Long id, @RequestBody User user) {
-        userService.update(id, user);
-    }
-
-     */
-
     @Operation(summary = "Required role:: ADMIN")
     @Secured("ROLE_ADMIN")
     @DeleteMapping("/{id}")
@@ -56,6 +44,16 @@ public class UserController {
     public void deleteUser(@PathVariable Long id) {
         userService.delete(id);
     }
+
+       /*
+    @Operation(summary = "Required role:: ADMIN")
+    @Secured("ROLE_ADMIN")
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updateUser(@PathVariable Long id, @RequestBody User user) {
+        userService.update(id, user);
+    }
+     */
 }
 
 

@@ -27,7 +27,7 @@ public class MessageService {
     @Autowired
     MyUserDetailsService myUserDetailsService;
 
-    // dont use these 2 below so might delete! ***********
+
     public List<Message> findAllMessages() {
         return messageRepo.findAll();
     }
@@ -35,23 +35,6 @@ public class MessageService {
     public Message getMessageById(Long id) {
         return messageRepo.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find the forum.."));
     }
-
-    /*
-    public List<Message> getAllMessagesByThreadId(Long thread_id){
-        if(threadRepo.existsById(thread_id)){
-            return messageRepo.findAllByThreadId(thread_id);
-        }
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "A thread with that id doesnt exist.");
-    }
-
-    public List<Message> getAllMessagesByUserId(Long user_id){
-        if(userRepo.existsById(user_id)){
-            return messageRepo.findAllByUserId(user_id);
-        }
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "a user with that id doesnt exist.");
-    }
-
-     */
 
     public Message createMessage(MessageCreateDto message, Long id) {
         var username = myUserDetailsService.getCurrentUser();
@@ -75,18 +58,6 @@ public class MessageService {
         return messageRepo.save(newMessage);
     }
 
-
-/*
-    public void update(Long id, Message message) {
-        if(!messageRepo.existsById(id)){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find the message with that id..");
-        }
-        message.setMessage_id(id);
-        messageRepo.save(message);
-    }
- */
-
-
     public void delete(Long id) {
 
         var message = messageRepo.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "could not find message..."));
@@ -106,6 +77,17 @@ public class MessageService {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "not authorized to delete message...");
         }
     }
+
+
+ /*
+    public void update(Long id, Message message) {
+        if(!messageRepo.existsById(id)){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find the message with that id..");
+        }
+        message.setMessage_id(id);
+        messageRepo.save(message);
+    }
+ */
 }
 
 

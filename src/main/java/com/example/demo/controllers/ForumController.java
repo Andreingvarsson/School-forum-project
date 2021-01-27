@@ -20,7 +20,6 @@ public class ForumController {
     @Autowired
     ForumService forumService;
 
-
     @Operation(summary = "Required role:: Open to all")
     @GetMapping("/forums")
     public ResponseEntity<List<Forum>> getAllForums() {
@@ -34,19 +33,6 @@ public class ForumController {
         var forum = forumService.findById(id);
         return ResponseEntity.ok(forum);
     }
-
-    /*
-    // Comment out so no one can use to add more forums?!? **********
-    @Operation(summary = "Required role:: ADMIN")
-    @Secured("ROLE_ADMIN")
-    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Forum> addForum(@RequestBody Forum forum){
-        var newForum = forumService.createForum(forum);
-        var uri = URI.create("/api/v1/forum/" + newForum.getForum_id());
-        return ResponseEntity.created(uri).body(newForum);
-    }
-
-     */
 
     @Operation(summary = "Required role:: ADMIN")
     @PutMapping("/forums/{forum_id}/moderator/{user_id}")
@@ -64,19 +50,30 @@ public class ForumController {
         forumService.removeModerator(forum_id, user_id);
     }
 
+        /*
+    // Comment out so no one can use to add more forums!
+    @Operation(summary = "Required role:: ADMIN")
+    @Secured("ROLE_ADMIN")
+    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Forum> addForum(@RequestBody Forum forum){
+        var newForum = forumService.createForum(forum);
+        var uri = URI.create("/api/v1/forum/" + newForum.getForum_id());
+        return ResponseEntity.created(uri).body(newForum);
+    }
+     */
 
     /*
-    // Should i really be able to??
+    // incase admin wants to update a forum...
     @Operation(summary = "Required role:: ADMIN")
     @Secured("ROLE_ADMIN")
     @PutMapping("/forums/{id}")
     public void updateForum(@PathVariable Long id, @RequestBody Forum forum){
         forumService.update(id, forum);
     }
-
      */
 
     /*
+    // Incase admin wants to delete a forum...
     @Operation(summary = "Required role:: ADMIN")
     @DeleteMapping("/forums/{id}")
     @Secured("ROLE_ADMIN")
@@ -85,5 +82,4 @@ public class ForumController {
         forumService.delete(id);
     }
      */
-
 }

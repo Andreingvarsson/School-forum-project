@@ -22,7 +22,6 @@ public class ThreadController {
     ThreadService threadService;
 
 
-    // be able to Use this one?!?! *******
     @Operation(summary = "Required role:: Open to all")
     @GetMapping("/threads")
     public ResponseEntity<List<Thread>> getAllThreads() {
