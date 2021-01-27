@@ -52,41 +52,26 @@ export default new Vuex.Store({
   },
   actions: {
     async fetchAllForums({ commit }) {
-     // console.log("Inne i fetchAllForums");
       const forumResult = await fetch("/api/v1/forums");
       const forums = await forumResult.json();
-      //console.log(forums, "Alla forums");
       commit("setForums", forums);
     },
 
     async fetchForumById({ commit }, id) {
-     // console.log("inne i BYID");
       const forumResult = await fetch(`/api/v1/forums/${id}`);
       const forum = await forumResult.json();
-      //console.log(forum, "ett forum");
       commit("setForum", forum);
     },
-
-    // async fetchMessageByThreadId({commit}, id){
-    //   console.log("INNE I MESSAGEBYTHREADID");
-    //   const messageResult = await fetch(`/api/v1/threads/${id}/messages`);
-    //   const message = await messageResult.json();
-    //   console.log(message, "ETT MESSAGE");
-    //   commit("setMessage", message);
-    // },
 
     async fetchThread({ commit }, id) {
       const getThread = await fetch(`/api/v1/threads/${id}`);
       const thread = await getThread.json();
       commit("setThread", thread);
-      //console.log(thread, "THREAD");
     },
 
     async fetchAllUsers({ commit }) {
-     // console.log("INNE IFETCHUSERS ");
       const userResult = await fetch("/api/v1/users");
       const user = await userResult.json();
-     // console.log(user, "Alla users");
       commit("setUser", user);
     },
 
@@ -94,7 +79,6 @@ export default new Vuex.Store({
       let user = await fetch("/auth/whoami");
       try {
         user = await user.json();
-       // console.log("User", user);
         commit("setLoggedInUser", user);
       } catch {
         console.log("Not authenticated");

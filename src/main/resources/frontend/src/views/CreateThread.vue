@@ -42,7 +42,6 @@ class CreateThread extends Vue {
   }
 
   async createThread() {
-    //console.log("Inne i createThread funktionen");
     let id = this.$route.params.id;
 
     let newThread = await fetch(`/api/v1/forums/${id}/threads`, {
@@ -52,7 +51,6 @@ class CreateThread extends Vue {
       credentials: "include",
     });
     newThread = await newThread.json();
-    //console.log(newThread, "new Thread");
     this.$store.commit("createNewThread", newThread);
     this.thread.threadTitle = null;
     this.thread.threadMessage = null;

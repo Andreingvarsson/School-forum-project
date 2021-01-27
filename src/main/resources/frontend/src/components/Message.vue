@@ -45,16 +45,13 @@ class Message extends Vue {
   }
 
   get moderator() {
-   // console.log(this.forum_id, "FORUMID");
     return this.user?.moderatedForums.includes(this.forum_id);
   }
 
   async deleteMessage() {
-   // console.log("Inne i deleteUser");
     let response = await fetch(`/api/v1/message/${this.message.message_id}`, {
       method: "DELETE",
     });
-   // console.log(response, "DELETEMESSAGE RESPONS");
     if (response.status === 204) {
       await this.$store.dispatch("fetchThread", this.$route.params.id);
     }
