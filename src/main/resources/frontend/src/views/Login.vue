@@ -37,7 +37,7 @@ class Login extends Vue {
   login(e) {
     let credentialsToLogin = {
       username: e.target.username.value,
-      password: e.target.username.value,
+      password: e.target.password.value,
     };
     this.loginAttempt(credentialsToLogin);
   }
