@@ -28,7 +28,7 @@ public class MessageService {
     MyUserDetailsService myUserDetailsService;
 
     // dont use these 2 below so might delete! ***********
-    public List<Message> findAllMessages(){
+    public List<Message> findAllMessages() {
         return messageRepo.findAll();
     }
 
@@ -53,23 +53,23 @@ public class MessageService {
 
      */
 
-    public Message createMessage(MessageCreateDto message, Long id){
+    public Message createMessage(MessageCreateDto message, Long id) {
         var username = myUserDetailsService.getCurrentUser();
         var user = userRepo.findByUsername(username);
 
-        if(user == null){
+        if (user == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find the user...");
         }
 
         var thread = threadRepo.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find the thread..."));
-        if(thread.isLockedThread()){
+        if (thread.isLockedThread()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The thread is locked...");
         }
         var newMessage = new Message(message.getCreatedMessage(), id, user);
 
-        if(user.getRoles().contains("ADMIN") || user.getModeratedForums().contains(thread.getForum_id())){
-         newMessage.setWarningMessage(message.isWarningMessage());
-        }else{
+        if (user.getRoles().contains("ADMIN") || user.getModeratedForums().contains(thread.getForum_id())) {
+            newMessage.setWarningMessage(message.isWarningMessage());
+        } else {
             newMessage.setWarningMessage(false);
         }
         return messageRepo.save(newMessage);
@@ -98,16 +98,16 @@ public class MessageService {
         var username = myUserDetailsService.getCurrentUser();
         var user = userRepo.findByUsername(username);
 
-        if(user == null){
+        if (user == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find the user...");
         }
         var thread = threadRepo.findById(message.getThread_id()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find the thread..."));
 
-        if(user.getRoles().contains("ADMIN") || user.getModeratedForums().contains(thread.getForum_id())){
+        if (user.getRoles().contains("ADMIN") || user.getModeratedForums().contains(thread.getForum_id())) {
             System.out.println("INNE I SKITEN");
             messageRepo.deleteById(message.getMessage_id());
-        }else{
-           throw new ResponseStatusException(HttpStatus.FORBIDDEN, "not authorized to delete message...");
+        } else {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "not authorized to delete message...");
         }
     }
 }

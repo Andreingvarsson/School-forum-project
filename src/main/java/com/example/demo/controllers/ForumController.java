@@ -2,6 +2,7 @@ package com.example.demo.controllers;
 
 import com.example.demo.entities.Forum;
 import com.example.demo.services.ForumService;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -20,20 +21,24 @@ public class ForumController {
     ForumService forumService;
 
 
+    @Operation(summary = "Required role:: Open to all")
     @GetMapping("/forums")
-   public ResponseEntity<List<Forum>> getAllForums(){
+    public ResponseEntity<List<Forum>> getAllForums() {
         var forums = forumService.findAllForums();
         System.out.println("Hämtar alla forums");
         return ResponseEntity.ok(forums);
     }
 
+    @Operation(summary = "Required role:: Open to all")
     @GetMapping("/forums/{id}")
-    public ResponseEntity<Forum> getForumById(@PathVariable Long id){
+    public ResponseEntity<Forum> getForumById(@PathVariable Long id) {
         var forum = forumService.findById(id);
         return ResponseEntity.ok(forum);
     }
 
+    /*
     // Comment out so no one can use to add more forums?!? **********
+    @Operation(summary = "Required role:: ADMIN")
     @Secured("ROLE_ADMIN")
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Forum> addForum(@RequestBody Forum forum){
@@ -42,21 +47,28 @@ public class ForumController {
         return ResponseEntity.created(uri).body(newForum);
     }
 
+     */
+
+    @Operation(summary = "Required role:: ADMIN")
     @PutMapping("/forums/{forum_id}/moderator/{user_id}")
     @Secured("ROLE_ADMIN")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void addModeratorToForum(@PathVariable long forum_id, @PathVariable long user_id){
+    public void addModeratorToForum(@PathVariable long forum_id, @PathVariable long user_id) {
         forumService.addModerator(forum_id, user_id);
     }
 
+    @Operation(summary = "Required role:: ADMIN")
     @DeleteMapping("/forums/{forum_id}/moderator/{user_id}")
     @Secured("ROLE_ADMIN")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void removeModeratorFromForum(@PathVariable long forum_id, @PathVariable long user_id){
+    public void removeModeratorFromForum(@PathVariable long forum_id, @PathVariable long user_id) {
         forumService.removeModerator(forum_id, user_id);
     }
 
+
     /*
+    // Should i really be able to??
+    @Operation(summary = "Required role:: ADMIN")
     @Secured("ROLE_ADMIN")
     @PutMapping("/forums/{id}")
     public void updateForum(@PathVariable Long id, @RequestBody Forum forum){
@@ -65,16 +77,14 @@ public class ForumController {
 
      */
 
-
+    /*
+    @Operation(summary = "Required role:: ADMIN")
     @DeleteMapping("/forums/{id}")
     @Secured("ROLE_ADMIN")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteForum(@PathVariable Long id){
         forumService.delete(id);
     }
-
-
-
-
+     */
 
 }

@@ -36,9 +36,9 @@ public class AuthController {
 
     @GetMapping("/logout")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public void logoutUser (HttpServletRequest request, HttpServletResponse response) {
+    public void logoutUser(HttpServletRequest request, HttpServletResponse response) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth != null){
+        if (auth != null) {
             new SecurityContextLogoutHandler().logout(request, response, auth);
         } else {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Error found while trying to logout");

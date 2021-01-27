@@ -22,7 +22,7 @@ public class Message {
     private Long thread_id;
     private boolean warningMessage;
 
-    public Message(String message,  Long thread_id, User user) {
+    public Message(String message, Long thread_id, User user) {
         this.message = message;
         this.thread_id = thread_id;
         this.timestamp = new Date().getTime();
@@ -33,9 +33,6 @@ public class Message {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
     private User messageOwner;
-
-
-
 
 
 }

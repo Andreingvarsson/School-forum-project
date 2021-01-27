@@ -45,11 +45,11 @@ public class MyUserDetailsService implements UserDetailsService {
         return toUserDetails(user);
     }
 
-    public User addUser(String username, String email, String password, String roles){
+    public User addUser(String username, String email, String password, String roles) {
         User user = new User(username, email, encoder.encode(password), roles);
-        try{
+        try {
             return userRepo.save(user);
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
@@ -74,7 +74,9 @@ public class MyUserDetailsService implements UserDetailsService {
     }
 
 
-    public BCryptPasswordEncoder getEncoder() {return encoder;}
+    public BCryptPasswordEncoder getEncoder() {
+        return encoder;
+    }
 }
 
 

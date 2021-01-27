@@ -27,17 +27,21 @@ public class UserService {
     @Autowired
     MyUserDetailsService myUserDetailService;
 
-    public User getCurrentUser(){
+    public User getCurrentUser() {
         String username = myUserDetailService.getCurrentUser();
         return userRepo.findByUsername(username);
     }
 
-    public User findByUsername(String username){return userRepo.findByUsername(username);}
+    public User findByUsername(String username) {
+        return userRepo.findByUsername(username);
+    }
 
-    public List<User> getAllUsers(){return userRepo.findAll();}
+    public List<User> getAllUsers() {
+        return userRepo.findAll();
+    }
 
-    public User registerUser(UserDto userToCreate){
-        if(userRepo.existsByUsername(userToCreate.getUsername())){
+    public User registerUser(UserDto userToCreate) {
+        if (userRepo.existsByUsername(userToCreate.getUsername())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Username already exists.");
         }
         var newUser = myUserDetailService.addUser(
@@ -50,7 +54,7 @@ public class UserService {
 
     // do i really need this one?? *****************************************
     public void update(Long id, User user) {
-        if(!userRepo.existsById(id)){
+        if (!userRepo.existsById(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find the user with that id..");
         }
         user.setUser_id(id);
@@ -59,10 +63,10 @@ public class UserService {
 
 
     public void delete(Long id) {
-      // var user = userRepo.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find the user with that id.."));
+        // var user = userRepo.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find the user with that id.."));
 
 
-        if(!userRepo.existsById(id)){
+        if (!userRepo.existsById(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find the user with that id..");
         }
         userRepo.deleteById(id);

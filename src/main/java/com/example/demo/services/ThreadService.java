@@ -28,47 +28,47 @@ public class ThreadService {
     @Autowired
     ForumRepo forumRepo;
 
-// Do i need this one?? *******
-  public List<Thread> findAllThreads(){
-      return threadRepo.findAll();
-  }
+    // Do i need this one?? *******
+    public List<Thread> findAllThreads() {
+        return threadRepo.findAll();
+    }
 
-  public Thread findById(Long id){
-      return threadRepo.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find the thread.."));
-  }
+    public Thread findById(Long id) {
+        return threadRepo.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find the thread.."));
+    }
 
-  public Thread createThread(ThreadCreateDto thread, Long id){
-      var username = myUserDetailsService.getCurrentUser();
-      var user = userRepo.findByUsername(username);
-      if(user == null){
-          throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find the user...");
-      }
-      var newThread = new Thread(thread.getThreadTitle(),thread.getThreadMessage(), id, user);
-      return threadRepo.save(newThread);
-  }
+    public Thread createThread(ThreadCreateDto thread, Long id) {
+        var username = myUserDetailsService.getCurrentUser();
+        var user = userRepo.findByUsername(username);
+        if (user == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find the user...");
+        }
+        var newThread = new Thread(thread.getThreadTitle(), thread.getThreadMessage(), id, user);
+        return threadRepo.save(newThread);
+    }
 
-  public void update(Long id){
+    public void update(Long id) {
 
-      var username = myUserDetailsService.getCurrentUser();
-      var user = userRepo.findByUsername(username);
+        var username = myUserDetailsService.getCurrentUser();
+        var user = userRepo.findByUsername(username);
 
-      var thread = threadRepo.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find the thread.."));
-      if(!user.getRoles().contains("ADMIN")){
-          var forum = forumRepo.findById(thread.getForum_id()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "could not find forum of that thread.."));
-          if(!user.getModeratedForums().contains(forum.getForum_id())){
-              throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Not authorized..");
-          }
-      }
-      thread.setLockedThread(!thread.isLockedThread());
-      threadRepo.save(thread);
-  }
+        var thread = threadRepo.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find the thread.."));
+        if (!user.getRoles().contains("ADMIN")) {
+            var forum = forumRepo.findById(thread.getForum_id()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "could not find forum of that thread.."));
+            if (!user.getModeratedForums().contains(forum.getForum_id())) {
+                throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Not authorized..");
+            }
+        }
+        thread.setLockedThread(!thread.isLockedThread());
+        threadRepo.save(thread);
+    }
 
-  public void delete(Long id){
-      if(!threadRepo.existsById(id)){
-          throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find the thread with that id..");
-      }
-      threadRepo.deleteById(id);
-  }
+    public void delete(Long id) {
+        if (!threadRepo.existsById(id)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find the thread with that id..");
+        }
+        threadRepo.deleteById(id);
+    }
 
 }
 

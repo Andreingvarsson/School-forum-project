@@ -26,7 +26,7 @@ public class Thread {
     private boolean lockedThread;
 
 
-    public Thread(String title, String threadMessage, Long forum_id, User user){
+    public Thread(String title, String threadMessage, Long forum_id, User user) {
         this.title = title;
         this.threadMessage = threadMessage;
         this.forum_id = forum_id;
@@ -44,7 +44,6 @@ public class Thread {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
     private User threadOwner;
-
 
 
 }

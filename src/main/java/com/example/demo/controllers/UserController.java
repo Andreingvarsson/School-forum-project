@@ -3,6 +3,7 @@ package com.example.demo.controllers;
 import com.example.demo.dtos.UserDto;
 import com.example.demo.entities.User;
 import com.example.demo.services.UserService;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,34 +21,37 @@ public class UserController {
     @Autowired
     UserService userService;
 
+    @Operation(summary = "Required role:: ADMIN")
     @Secured("ROLE_ADMIN")
     @GetMapping
-    public ResponseEntity<List<User>> getAllUsers(){
+    public ResponseEntity<List<User>> getAllUsers() {
         var users = userService.getAllUsers();
         System.out.println("Hämtar alla users");
         return ResponseEntity.ok(users);
     }
 
+    @Operation(summary = "Required role:: Open to all")
     @PostMapping
-    public ResponseEntity<User> registerUser(@RequestBody @Validated UserDto userToBeCreated){
+    public ResponseEntity<User> registerUser(@RequestBody @Validated UserDto userToBeCreated) {
         var newUser = userService.registerUser(userToBeCreated);
         var uri = URI.create("/api/v1/users" + newUser.getUser_id());
         return ResponseEntity.created(uri).body(newUser);
     }
 
+    @Operation(summary = "Required role:: ADMIN")
     @Secured("ROLE_ADMIN")
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateUser(@PathVariable Long id, @RequestBody User user){
+    public void updateUser(@PathVariable Long id, @RequestBody User user) {
         userService.update(id, user);
     }
 
+    @Operation(summary = "Required role:: ADMIN")
     @Secured("ROLE_ADMIN")
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteUser(@PathVariable Long id){
+    public void deleteUser(@PathVariable Long id) {
         userService.delete(id);
-
     }
 }
 

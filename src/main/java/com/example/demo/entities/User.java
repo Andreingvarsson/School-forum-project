@@ -36,7 +36,7 @@ public class User {
         this.roles = user.getRoles();
     }
 
-    public User(String username, String email, String password, String roles){
+    public User(String username, String email, String password, String roles) {
         this.username = username;
         this.email = email;
         this.password = password;
@@ -47,11 +47,11 @@ public class User {
     @ManyToMany(mappedBy = "moderators", fetch = FetchType.LAZY)
     private Set<Forum> moderatedForums;
 
-    public List<Long> getModeratedForums(){
+    public List<Long> getModeratedForums() {
         return moderatedForums.stream().map(forum -> forum.getForum_id()).collect(Collectors.toList());
     }
 
-    public void removeForum(Forum forum){
+    public void removeForum(Forum forum) {
         this.moderatedForums.remove(forum);
         forum.getModerators().remove(this);
     }
@@ -70,4 +70,5 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
+
 }
