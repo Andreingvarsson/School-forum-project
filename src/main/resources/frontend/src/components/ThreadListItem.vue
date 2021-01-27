@@ -58,7 +58,7 @@ class ThreadListItem extends Vue {
   }
 
   async lockThread() {
-    console.log("Inne i lockThread");
+   // console.log("Inne i lockThread");
     let response = await fetch(
       `/api/v1/forums/${this.thread.thread_id}/threads`,
       {
@@ -66,8 +66,8 @@ class ThreadListItem extends Vue {
         credentials: "include",
       }
     );
-    console.log(response);
-    console.log(this.thread.forum_id);
+   // console.log(response);
+   // console.log(this.thread.forum_id);
     if (response.status === 204) {
       this.$store.dispatch("fetchForumById", this.thread.forum_id);
     }

@@ -122,7 +122,7 @@ class UserListItem extends Vue {
   }
 
   async addModerator(id) {
-    console.log("Inne i addModerator", "ID = ", id);
+   // console.log("Inne i addModerator", "ID = ", id);
     let response = await fetch(
       `/api/v1/forums/${id}/moderator/${this.user.user_id}`,
       {
@@ -137,7 +137,7 @@ class UserListItem extends Vue {
   }
 
   async removeModerator(id) {
-    console.log("Inne i removeModerator");
+   // console.log("Inne i removeModerator");
     let response = await fetch(
       `/api/v1/forums/${id}/moderator/${this.user.user_id}`,
       {
@@ -148,11 +148,11 @@ class UserListItem extends Vue {
     if (response.status === 204) {
       this.$store.dispatch("fetchAllUsers", this.$store.state.user);
     }
-    console.log(response);
+   // console.log(response);
   }
 
   async deleteUser() {
-    console.log("Inne i deleteUser");
+    //console.log("Inne i deleteUser");
    let response = await fetch(`/api/v1/users/${this.user.user_id}`, {
       method: "DELETE",
       credentials: "include",

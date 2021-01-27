@@ -81,14 +81,14 @@ class Thread extends Vue {
   }
 
   get moderator() {
-    console.log(this.thread.forum_id, "FORUMID Thread");
+   // console.log(this.thread.forum_id, "FORUMID Thread");
     return this.user?.moderatedForums.includes(this.thread.forum_id);
   }
 
   async createMessage() {
-    console.log("Inne i createMessage funktionen");
+   // console.log("Inne i createMessage funktionen");
     let id = this.$route.params.id;
-    console.log(this.message, "MESSAGE");
+   // console.log(this.message, "MESSAGE");
 
     let newMessage = await fetch(`/api/v1/threads/${id}/messages`, {
       method: "POST",
@@ -97,7 +97,7 @@ class Thread extends Vue {
       credentials: "include",
     });
     newMessage = await newMessage.json();
-    console.log(newMessage, "new Message");
+    //console.log(newMessage, "new Message");
     this.$store.commit("createNewMessage", newMessage);
     this.message.createdMessage = null;
     this.message.warningMessage = null;
@@ -105,7 +105,7 @@ class Thread extends Vue {
 
   async created() {
     if (!this.thread) {
-      console.log("INNE I Created thread");
+     // console.log("INNE I Created thread");
       await this.$store.dispatch("fetchThread", this.$route.params.id);
     }
   }
