@@ -11,10 +11,7 @@
         <h1 class="card-title title-text col-5">{{ thread.title }}</h1>
         <p class="card-text message-text col-7">{{ thread.threadMessage }}</p>
 
-        <div
-          class="card-footer"
-          v-if="user ? user.roles.includes('ADMIN') : false"
-        >
+        <div class="card-footer" v-if="admin || moderator">
           <svg
             @click.stop="lockThread"
             xmlns="http://www.w3.org/2000/svg"
@@ -48,8 +45,20 @@ class ThreadListItem extends Vue {
   })
   thread;
 
+  get forums() {
+    return this.$store.state.forums;
+  }
+
   get user() {
     return this.$store.state.loggedInUser;
+  }
+
+  get admin() {
+    return this.user ? this.user.roles.includes("ADMIN") : false;
+  }
+
+  get moderator() {
+    return this.user?.moderatedForums.includes(this.thread.forum_id);
   }
 
   navigate() {
@@ -58,7 +67,7 @@ class ThreadListItem extends Vue {
   }
 
   async lockThread() {
-   // console.log("Inne i lockThread");
+    // console.log("Inne i lockThread");
     let response = await fetch(
       `/api/v1/forums/${this.thread.thread_id}/threads`,
       {
@@ -66,8 +75,8 @@ class ThreadListItem extends Vue {
         credentials: "include",
       }
     );
-   // console.log(response);
-   // console.log(this.thread.forum_id);
+    // console.log(response);
+    // console.log(this.thread.forum_id);
     if (response.status === 204) {
       this.$store.dispatch("fetchForumById", this.thread.forum_id);
     }

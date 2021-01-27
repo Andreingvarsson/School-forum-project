@@ -63,8 +63,6 @@ public class UserService {
 
 
     public void delete(Long id) {
-        // var user = userRepo.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find the user with that id.."));
-
 
         if (!userRepo.existsById(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find the user with that id..");
