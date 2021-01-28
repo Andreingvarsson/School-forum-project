@@ -54,7 +54,7 @@ class Message extends Vue {
     });
     if (response.status === 204) {
       await this.$store.dispatch("fetchThread", this.$route.params.id);
-    } 
+    }
   }
 }
 

@@ -9,7 +9,7 @@
         }"
       >
         <h1 class="card-title title-text col-5">{{ thread.title }}</h1>
-      
+
         <div class="card-footer" v-if="admin || moderator">
           <svg
             @click.stop="lockThread"

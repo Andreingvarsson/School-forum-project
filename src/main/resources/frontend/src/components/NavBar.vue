@@ -1,11 +1,7 @@
 <template>
   <div class="navbar">
     <h1 class="point" @click="goTo('/')">GamingForum</h1>
-    <div
-      class="point"
-      v-if="user ? user.roles.includes('ADMIN') : false"
-      @click="goTo('/admin')"
-    >
+    <div class="point" v-if="admin" @click="goTo('/admin')">
       Admin
     </div>
     <div class="point" v-if="!user" @click="goTo('/login')">Login</div>
@@ -26,6 +22,9 @@ class NavBar extends Vue {
 
   get user() {
     return this.$store.state.loggedInUser;
+  }
+  get admin() {
+    return this.user ? this.user.roles.includes("ADMIN") : false;
   }
 
   async logoutUser() {

@@ -149,12 +149,12 @@ class UserListItem extends Vue {
   }
 
   async deleteUser() {
-   let response = await fetch(`/api/v1/users/${this.user.user_id}`, {
+    let response = await fetch(`/api/v1/users/${this.user.user_id}`, {
       method: "DELETE",
       credentials: "include",
     });
-    if(response.status === 204){
-      this.$store.dispatch("fetchAllUsers")
+    if (response.status === 204) {
+      this.$store.dispatch("fetchAllUsers");
     }
   }
 
