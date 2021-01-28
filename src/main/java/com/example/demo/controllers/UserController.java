@@ -45,15 +45,7 @@ public class UserController {
         userService.delete(id);
     }
 
-       /*
-    @Operation(summary = "Required role:: ADMIN")
-    @Secured("ROLE_ADMIN")
-    @PutMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateUser(@PathVariable Long id, @RequestBody User user) {
-        userService.update(id, user);
-    }
-     */
+
 }
 
 
