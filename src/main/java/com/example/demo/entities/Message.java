@@ -30,7 +30,7 @@ public class Message {
 
     }
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne()
     @JoinColumn(name = "user_id")
     private User messageOwner;
 

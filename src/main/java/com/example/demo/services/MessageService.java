@@ -58,7 +58,7 @@ public class MessageService {
         return messageRepo.save(newMessage);
     }
 
-    public void delete(Long id) {
+    public void deleteAMessage(Long id) {
 
         var message = messageRepo.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "could not find message..."));
 
@@ -71,7 +71,7 @@ public class MessageService {
         var thread = threadRepo.findById(message.getThread_id()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find the thread..."));
 
         if (user.getRoles().contains("ADMIN") || user.getModeratedForums().contains(thread.getForum_id())) {
-            System.out.println("INNE I SKITEN");
+           // System.out.println("INNE I SKITEN");
             messageRepo.deleteById(message.getMessage_id());
         } else {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "not authorized to delete message...");
