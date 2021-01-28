@@ -56,7 +56,7 @@ public class ThreadController {
 
 
     @Operation(summary = "Required role:: ADMIN")
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/threads/{id}")
     @Secured("ROLE_ADMIN")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteThread(@PathVariable Long id) {
