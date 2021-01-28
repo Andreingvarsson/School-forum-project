@@ -55,7 +55,7 @@
               </button>
             </div>
             <select
-              class="custom-select"
+              class="custom-select "
               id="removeModerator"
               v-on:change="setRemove($event.target.value)"
             >
@@ -70,7 +70,7 @@
             </select>
           </div>
         </div>
-        <div class="del" @click="deleteUser">delete</div>
+        <div class="del mb-4 mt-2" @click="deleteUser">Delete</div>
       </div>
     </div>
   </div>
@@ -173,5 +173,6 @@ export default UserListItem;
 .del:hover {
   color: rgb(230, 62, 62);
   cursor: pointer;
+  font-weight: bolder;
 }
 </style>

@@ -12,7 +12,7 @@
         </blockquote>
       </div>
       <div v-if="admin || moderator" @click="deleteMessage" class="del">
-        delete
+        Delete
       </div>
     </div>
   </div>
@@ -73,5 +73,6 @@ export default Message;
 .del:hover {
   color: rgb(230, 62, 62);
   cursor: pointer;
+  font-weight: bolder;
 }
 </style>
