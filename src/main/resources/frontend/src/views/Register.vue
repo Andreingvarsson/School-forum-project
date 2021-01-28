@@ -1,5 +1,5 @@
 <template>
-  <div class="account-background container">
+  <div class="account-background container ">
     <form @submit.prevent="registerForm">
       <div class="form-group">
         <label for="">Username</label>
@@ -98,6 +98,5 @@ export default Register;
 .account-background {
   background-color: rgba(128, 128, 128, 0.541);
   padding: 10px;
-  margin: 0px 15px 0px 15px;
 }
 </style>
