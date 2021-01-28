@@ -36,9 +36,9 @@ class Message extends Vue {
     return this.$store.state.loggedInUser;
   }
 
-  get forums() {
-    return this.$store.state.forums;
-  }
+  // get forums() {
+  //   return this.$store.state.forums;
+  // }
 
   get admin() {
     return this.user ? this.user.roles.includes("ADMIN") : false;
@@ -54,7 +54,7 @@ class Message extends Vue {
     });
     if (response.status === 204) {
       await this.$store.dispatch("fetchThread", this.$route.params.id);
-    }
+    } 
   }
 }
 
