@@ -71,23 +71,11 @@ public class MessageService {
         var thread = threadRepo.findById(message.getThread_id()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find the thread..."));
 
         if (user.getRoles().contains("ADMIN") || user.getModeratedForums().contains(thread.getForum_id())) {
-           // System.out.println("INNE I SKITEN");
             messageRepo.deleteById(message.getMessage_id());
         } else {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "not authorized to delete message...");
         }
     }
-
-
- /*
-    public void update(Long id, Message message) {
-        if(!messageRepo.existsById(id)){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find the message with that id..");
-        }
-        message.setMessage_id(id);
-        messageRepo.save(message);
-    }
- */
 }
 
 

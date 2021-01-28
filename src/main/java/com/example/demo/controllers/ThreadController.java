@@ -36,7 +36,6 @@ public class ThreadController {
         return ResponseEntity.ok(thread);
     }
 
-
     @Operation(summary = "Required role:: USER, ADMIN, MODERATOR")
     @PostMapping("/forums/{id}/threads")
     @Secured({"ROLE_USER", "ROLE_ADMIN", "ROLE_MODERATOR"})
@@ -53,7 +52,6 @@ public class ThreadController {
     public void updateThread(@PathVariable Long id) {
         threadService.update(id);
     }
-
 
     @Operation(summary = "Required role:: ADMIN")
     @DeleteMapping("/threads/{id}")

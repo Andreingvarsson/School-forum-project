@@ -61,16 +61,6 @@ public class UserService {
         threadRepo.deleteUserInThreadTable(id);
         messageRepo.deleteUserInMessagesTable(id);
     }
-
-        /*
-    public void update(Long id, User user) {
-        if (!userRepo.existsById(id)) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find the user with that id..");
-        }
-        user.setUser_id(id);
-        userRepo.save(user);
-    }
-     */
 }
 
 
