@@ -21,21 +21,6 @@ public class MessageController {
     @Autowired
     MessageService messageService;
 
-
-    @Operation(summary = "Required role:: Open to all")
-    @GetMapping("/messages")
-    public ResponseEntity<List<Message>> getAllMessages() {
-        var messages = messageService.findAllMessages();
-        return ResponseEntity.ok(messages);
-    }
-
-    @Operation(summary = "Required role:: Open to all")
-    @GetMapping("/thread/messages/{id}")
-    public ResponseEntity<Message> getMessageById(@PathVariable Long id) {
-        var message = messageService.getMessageById(id);
-        return ResponseEntity.ok(message);
-    }
-
     @Operation(summary = "Required role:: USER, ADMIN, MODERATOR")
     @Secured({"ROLE_USER", "ROLE_ADMIN", "ROLE_MODERATOR"})
     @PostMapping("/threads/{thread_id}/messages")
