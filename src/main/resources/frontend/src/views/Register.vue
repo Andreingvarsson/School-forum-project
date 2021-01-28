@@ -1,5 +1,5 @@
 <template>
-  <div class="account-background">
+  <div class="account-background container">
     <form @submit.prevent="registerForm">
       <div class="form-group">
         <label for="">Username</label>
